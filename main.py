@@ -21,7 +21,7 @@ from createCordinate import *
 
 
 
-map_data = truncated_140by140
+map_data = rectangle_140by140
 
 
 coners = None
