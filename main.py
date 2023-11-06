@@ -35,7 +35,11 @@ coners = createCordinate(binary_corner(dst))
 for i in range(len(coners)):
     sensor_instance = Sensor(map_data, coners[i], 6)
     sensor_instance.deploy_sensor()
-
+    
+test_instance = Sensor(map_data, (110,110), 6)
+test_instance.deploy_sensor()
+test_instance2 = Sensor(map_data, (116,105), 6)
+test_instance2.deploy_sensor()
 
 
 visual_tool  = VisualTool()
