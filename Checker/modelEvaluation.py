@@ -1,5 +1,14 @@
-import math
+import os, sys, time, math
+
+__file__ = os.getcwd()
+__root__ = os.path.dirname(__file__)
+map_data_dir_path = os.path.join(__file__,"MapData")
+sys.path.append(map_data_dir_path)
+map_data_dir_path = os.path.join(__file__,"MapData")
+sys.path.append(map_data_dir_path)
+
 from TEST_DATASET import *
+from TEST_DATASET_ANSWER import *
 from createArray import visual_array
 
 #거리를 계산하는 함수
@@ -41,7 +50,7 @@ def evaluation(answer, output):
                     min_distance = distance
                     pair = [point1, point2]
             closest_pair.append(pair)   #거리가 최소가 되는 쌍들을 생성
-            print(closest_pair)
+
         
         #거리값들의 리스트 생성
         distance_list = []
@@ -58,10 +67,10 @@ def evaluation(answer, output):
             else:
                 d_lenth += i
                 not_zero += 1
-        print(d_lenth)
+  
         return 100*(len(distance_list)-not_zero)/len(distance_list) + 1/(1+d_lenth)*(not_zero/len(distance_list))
 
-
+''''
 #정답 데이터
 source_ex = [[1,0,0],
              [0,0,0],
@@ -71,5 +80,7 @@ source_ex = [[1,0,0],
 compare_ex = [[0,0,1],
               [0,0,0],   
               [0,0,0]]
-        
-print(evaluation(source_ex, compare_ex))
+
+#사용법              
+evaluation(source_ex, compare_ex)
+'''

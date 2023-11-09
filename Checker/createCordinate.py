@@ -1,4 +1,4 @@
-from TEST_DATASET import *
+from TEST_DATASET_ANSWER import *
 
 def createCordinate(data):
     grid = []
@@ -8,4 +8,4 @@ def createCordinate(data):
                 grid.append("("+str(j+1)+","+str(i+1)+")")
     return grid
 
-print(createCordinate(test_data4))
+print(createCordinate(rectangle_140by140_ans))
