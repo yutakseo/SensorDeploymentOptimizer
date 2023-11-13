@@ -1,3 +1,10 @@
+'''
+READ ME
+
+아래의 모듈은 두개의 이중 배열 리스트의 오차를 계산하기 위해 개발된 모듈이다
+
+
+'''
 import os, sys, time, math
 
 __file__ = os.getcwd()
@@ -16,35 +23,35 @@ def calculate_distance(p1, p2):
     return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 
-def evaluation(answer, output):
+def evaluation(answer:list, output:list):
     #정답데이터의 코너 개수와 좌표
-    corner_position = []
+    corner = []
     #출력데이터의 코너 개수와 좌표
-    output_position = []
+    result = []
     
     #이중배열 반복문 실행
     for i in range(len(answer)):
         for j in range(len(answer[0])):
             if answer[i][j] != 0:
-                corner_position.append([i,j])
+                corner.append((i,j))
             if output[i][j] != 0:
-                output_position.append([i,j])
+                result.append((i,j))
     
     #정답데이터의 코너 개수와 출력데이터의 코너 개수가 다를 경우의 평가
+    if len(corner) != len(result):
     #두 데이터의 개수가 다를 때
-    if len(corner_position) != len(output_position):
-        if len(corner_position) > len(output_position):
-            return len(output_position)/len(corner_position)*100
-        elif len(output_position) > len(corner_position):
-            return (len(corner_position)-(len(output_position)-len(corner_position)))/len(corner_position)*100
+        if len(corner) > len(result):
+            return len(result)/len(corner)*100
+        elif len(result) > len(corner):
+            return (len(corner)-(len(result)-len(corner)))/len(corner)*100
     #두 데이터의 개수가 같을 때
     else:
         #쌍비교
         closest_pair = []
-        for point1 in corner_position:
+        for point1 in corner:
             min_distance = float('inf')
             pair = []
-            for point2 in output_position:
+            for point2 in result:
                 distance = calculate_distance(point1, point2)
                 if distance <= min_distance:
                     min_distance = distance
