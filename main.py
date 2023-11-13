@@ -41,7 +41,6 @@ map_data_answer = truncated_140by140_ans
 answer = createCordinate(map_data_answer)
 print("정답 : ",answer)
 print("출력 : ",coners)
-print(evaluation(answer, coners))
 
 end = time.time()
 print("\n\nRuntime : "+str(end-start))
