@@ -36,7 +36,6 @@ def pairing(p1:list, p2:list):
         closest.append(pair)
     return closest
 
-
 def model_eval(input_corner:list, input_result:list):
     corner = ext_cordinate(input_corner)
     result = ext_cordinate(input_result)
