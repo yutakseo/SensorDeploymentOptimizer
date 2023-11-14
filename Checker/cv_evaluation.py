@@ -36,9 +36,9 @@ def pairing(p1:list, p2:list):
         closest.append(pair)
     return closest
 
-def model_eval(input_corner:list, input_result:list):
-    corner = ext_cordinate(input_corner)
-    result = ext_cordinate(input_result)
+def model_eval(input1:list, input2:list):
+    corner = ext_cordinate(input1)
+    result = ext_cordinate(input2)
     corner_num = len(corner)
     result_num = len(result)
     
@@ -54,21 +54,14 @@ def model_eval(input_corner:list, input_result:list):
             err_set.append(dots_distance(e[0], e[1]))
         
         numb_of_err = len(err_set)
-        numb_of_zero = 0
+        correct = 0
+        distance = 0
         for i in err_set:
             if i == 0.0:
-                numb_of_zero += 1
+                correct += 1
+            else:
+                distance += i
+        wrong = numb_of_err - correct
+        score = 100*((correct/numb_of_err)+(wrong/(numb_of_err*(1+distance))))
         
-        #수정부분
-        score = ""
-        
-        return err_set
-
-#사용법              
-c_ex = [[1,0,0],
-        [0,0,0],
-        [0,0,1]]
-r_ex = [[1,0,0],
-        [0,0,0],   
-        [0,0,1]]
-print(model_eval(c_ex, r_ex))
+        return score
