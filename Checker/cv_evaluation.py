@@ -65,3 +65,51 @@ def model_eval(input1:list, input2:list):
         score = 100*((correct/numb_of_err)+(wrong/(numb_of_err*(1+distance))))
         
         return score
+    
+    
+b = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,1,0,0,0,0,0,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,1,0,0,0,0,0,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]
+             ]
+a = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,1,0,0,0,0,0,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,0,0,0,0,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]
+             ]
+
+
+print("정확도 : ",model_eval(a, b))
+
+
+import os, sys, time
+__file__ = os.getcwd()
+__root__ = os.path.dirname(__file__)
+
+map_data_dir_path = os.path.join(__file__,"MapData")
+visual_tool_dir_path = os.path.join(__file__,"VisualizationTool")
+
+sys.path.append(map_data_dir_path)
+sys.path.append(visual_tool_dir_path)
+
+
+from TEST_DATASET import *
+from TEST_DATASET_ANSWER import *
+from VisualizationModule import *
+visual_tool  = VisualTool()
+visual_tool.showJetMap("test", a)
+visual_tool.showJetMap("test", b)

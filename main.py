@@ -42,12 +42,11 @@ map_data_answer = rectangle_140by140_ans
 answer = createCordinate(map_data_answer)
 print("정답 : ",answer)
 print("출력 : ",coners)
-print(model_eval(map_data, map_data_answer))
 
 
 end = time.time()
 print("\n\nRuntime : "+str(end-start))
-#print(evaluation(source_ex, compare_ex))
+print("CV 정확도 : ",model_eval(map_data, map_data_answer))
 
 
 
