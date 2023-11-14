@@ -22,32 +22,29 @@ from cv_evaluation import *
 
 
 
-start = time.time()
-map_data = rectangle_140by140
+def __main__(map:str, sensor_coverage:int):
+    map_data = map
+    start = time.time()
+    coners = None
+    dst = harris_corner(map, 2, 3, 0.01)
+    corners_position = VisualTool()
+    coners = createCordinate(binary_corner(dst))
 
-coners = None
-dst = harris_corner(map_data, 2, 3, 0.01)
-corners_position = VisualTool()
-coners = createCordinate(binary_corner(dst))
+    for i in range(len(coners)):
+        sensor_instance = Sensor(map, coners[i], sensor_coverage)
+        sensor_instance.deploy_sensor()
 
-for i in range(len(coners)):
-    sensor_instance = Sensor(map_data, coners[i], 6)
-    sensor_instance.deploy_sensor()
+    map_data_answer = str.join(str(map),"_ans")
+    answer = createCordinate(map_data_answer)
+    end = time.time()
+    print("\n\nRuntime : "+str(end-start))
+    print("\nCV 정확도 : ",model_eval(map_data, map_data_answer))
 
+    visual_tool  = VisualTool()
+    visual_tool.showJetMap("test", map)
 
-map_data_answer = rectangle_140by140_ans
-answer = createCordinate(map_data_answer)
-print("정답 : ",answer)
-print("출력 : ",coners)
+__main__(stair_140by140, 30)
 
+__main__(rectangle_140by140, 30)
 
-end = time.time()
-print("\n\nRuntime : "+str(end-start))
-print("CV 정확도 : ",model_eval(map_data, map_data_answer))
-
-
-
-visual_tool  = VisualTool()
-visual_tool.showJetMap("test", map_data)
-visual_tool.showJetMap("test", dst)
-visual_tool.showJetMap("test", map_data_answer)
+__main__(truncated_140by140, 30)
