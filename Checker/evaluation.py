@@ -1,17 +1,17 @@
 '''
 READ ME
 
-아래의 모듈은 두개의 이중 배열 리스트의 오차를 계산하기 위해 개발된 모듈이다
+아래의 모듈은 CV의 출력물과 코너 정답 데이터의 오차를 계산하기 위해 개발된 모듈이다
+model_eval함수를 통해 오차를 계산하고 매개변수는 출력물과 정답 데이터의 2차원 리스트를
+입력하면 된다 결과값은 float형 정답결과가 반환(return)된다
+
+사용예제
+e = [[0,1,0],[]...]
+q = [[0,1,1],[]...]
+model_eval(e, q)
 
 
 '''
-c_ex = [[1,0,0],
-        [0,0,0],
-        [0,0,1]]
-r_ex = [[1,0,0],
-        [0,0,0],   
-        [0,0,1]]
-
 import math
 
 def dots_distance(p1:set, p2:set):
@@ -62,10 +62,16 @@ def model_eval(input_corner:list, input_result:list):
             if i == 0.0:
                 numb_of_zero += 1
         
-        
+        #수정부분
         score = ""
         
         return err_set
 
 #사용법              
+c_ex = [[1,0,0],
+        [0,0,0],
+        [0,0,1]]
+r_ex = [[1,0,0],
+        [0,0,0],   
+        [0,0,1]]
 print(model_eval(c_ex, r_ex))
