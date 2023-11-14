@@ -15,17 +15,18 @@ sys.path.append(sensor_module_path)
 sys.path.append(checker_module_path)
 
 from TEST_DATASET import *
+from TEST_DATASET_ANSWER import *
 from VisualizationModule import *
 from cornerDetector import *
 from Sensor import *
 from createArray import *
 from createCordinate import *
-from modelEvaluation import *
+from cv_evaluation import *
 
 
 
 start = time.time()
-map_data = truncated_140by140
+map_data = rectangle_140by140
 
 coners = None
 dst = harris_corner(map_data, 2, 3, 0.01)
@@ -37,15 +38,16 @@ for i in range(len(coners)):
     sensor_instance.deploy_sensor()
 
 
-map_data_answer = truncated_140by140_ans
+map_data_answer = rectangle_140by140_ans
 answer = createCordinate(map_data_answer)
 print("정답 : ",answer)
 print("출력 : ",coners)
+print(model_eval(map_data, map_data_answer))
+
 
 end = time.time()
 print("\n\nRuntime : "+str(end-start))
 #print(evaluation(source_ex, compare_ex))
-
 
 
 
