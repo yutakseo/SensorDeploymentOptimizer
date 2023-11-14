@@ -43,8 +43,8 @@ def __main__(map:str, sensor_coverage:int):
     visual_tool  = VisualTool()
     visual_tool.showJetMap("test", map)
 
-__main__(stair_140by140, 30)
+__main__(stair_10by10, 1)
 
-__main__(rectangle_140by140, 30)
+__main__(rectangle_10by10, 1)
 
-__main__(truncated_140by140, 30)
+__main__(truncated_10by10, 1)
