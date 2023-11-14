@@ -66,7 +66,7 @@ def model_eval(input1:list, input2:list):
         
         return score
     
-    
+'''
 b = [
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
@@ -87,13 +87,13 @@ a = [
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
-            [0,0,1,0,0,0,0,1,0,0],
+            [0,1,0,0,0,0,0,1,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0]
              ]
 
 
-print("정확도 : ",model_eval(a, b))
+print("\n정확도 : ",model_eval(a, b))
 
 
 import os, sys, time
@@ -113,3 +113,4 @@ from VisualizationModule import *
 visual_tool  = VisualTool()
 visual_tool.showJetMap("test", a)
 visual_tool.showJetMap("test", b)
+'''

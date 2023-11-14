@@ -52,3 +52,5 @@ print("CV 정확도 : ",model_eval(map_data, map_data_answer))
 
 visual_tool  = VisualTool()
 visual_tool.showJetMap("test", map_data)
+visual_tool.showJetMap("test", dst)
+visual_tool.showJetMap("test", map_data_answer)
