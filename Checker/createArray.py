@@ -14,7 +14,6 @@ def create_padding(matrix):
     filled_matrix[:, -1] = 0  # 마지막 열
     return filled_matrix
 
-
 def visual_array(title:str, data):
     matrix = np.array(data)
     rows, cols = matrix.shape
@@ -35,7 +34,6 @@ def visual_array(title:str, data):
     
     plt.show()
     return matrix
-    
     
 def binary_corner(corner_image):
     max_value = np.max(corner_image)

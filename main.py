@@ -1,8 +1,6 @@
 import os, sys, time
-
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
-
 map_data_dir_path = os.path.join(__file__,"MapData")
 visual_tool_dir_path = os.path.join(__file__,"VisualizationTool")
 corner_module_path = os.path.join(__file__,"CornerDetection")
@@ -13,7 +11,6 @@ sys.path.append(visual_tool_dir_path)
 sys.path.append(corner_module_path)
 sys.path.append(sensor_module_path)
 sys.path.append(checker_module_path)
-
 from TEST_DATASET import *
 from TEST_DATASET_ANSWER import *
 from VisualizationModule import *
