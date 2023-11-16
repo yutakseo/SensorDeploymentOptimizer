@@ -32,7 +32,7 @@ def calibration(data, p1, p2):
     for i in range(len(data)):
         for j in range(len(data[0])):
             if data[i][j] == 1:
-                grid.append(((j-p1),(i-p2)))
+                grid.append(((j+p1),(i-p2)))
     return grid
     
 def __main__(map_input:str, sensor_coverage:int, p1:int, p2:int):
@@ -60,7 +60,7 @@ def __main__(map_input:str, sensor_coverage:int, p1:int, p2:int):
     return None
 
 
-__main__("rectangle_10by10", 1, 1,1)
+__main__("stair_140by140", 1, -1,1)
 
 
 
