@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 
 
 class VisualTool:
-    def showNumpyMap(self, title:str, data):
+    def show_nummap(self, title:str, data):
         print(title)
         matrix = np.array(data)
         print(matrix)
     
-    def showBinaryMap(self, title:str, data):
+    def show_bimap(self, title:str, data):
         matrix = np.array(data)
         rows, cols = matrix.shape
         cmap_custom = plt.cm.colors.ListedColormap(['gray', 'white'])
@@ -22,11 +22,11 @@ class VisualTool:
         plt.show()
         return matrix
 
-    def showJetMap(self, title:str, data):
+    def show_jetmap(self, title:str, data):
         plt.imshow(data, cmap='jet')
         plt.show()
 
-    def returnCordinate(self, data):
+    def view_cord(self, data):
         grid = []
         for i in range(len(data)):
             for j in range(len(data[0])):
