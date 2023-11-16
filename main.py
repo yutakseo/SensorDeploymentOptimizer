@@ -46,5 +46,5 @@ def __main__(map:str, sensor_coverage:int):
     print("\nCV 정확도 : ",model_eval(binary_corner(map), map_data_answer))
     return None
 
-__main__(rectangle_10by10, 3)
+__main__(rectangle_10by10, 1)
 
