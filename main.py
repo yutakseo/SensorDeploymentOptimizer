@@ -57,9 +57,6 @@ def __main__(map_input:str, sensor_coverage:int):
     print("\n\nRuntime : "+str(end-start))
     print("\nCV 정확도 : ",model_eval(cvt_to_bi(corners_cord), compare))
     
-    print(cvt_to_bi(corners_cord))    
-    print("\n",np.array(eval(compare)))
-    
     return None
 
 
