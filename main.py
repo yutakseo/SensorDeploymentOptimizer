@@ -27,15 +27,15 @@ def cvt_to_bi(matrix:list):
     binary_image[matrix == max_value] = 1 
     return binary_image
 
-def calibration(data):
+def calibration(data, p1, p2):
     grid = []
     for i in range(len(data)):
         for j in range(len(data[0])):
             if data[i][j] == 1:
-                grid.append(((j-1),(i-1)))
+                grid.append(((j-p1),(i-p2)))
     return grid
     
-def __main__(map_input:str, sensor_coverage:int):
+def __main__(map_input:str, sensor_coverage:int, p1:int, p2:int):
     start = time.time()
     #입력 디지털 맵의 정답데이터 호출
     compare = map_input + "_ans"
@@ -44,7 +44,7 @@ def __main__(map_input:str, sensor_coverage:int):
     #헤리스 탐색결과를 raw_corner로 전달
     raw_corner = harris_corner(map, 2, 3, 0.01)
     #헤리스 탐색결과를 이진화(0, 1)시켜서 좌표획득
-    corners_cord = calibration(cvt_to_bi(raw_corner))
+    corners_cord = calibration(cvt_to_bi(raw_corner), p1, p2)
     #획득된 좌표를 반복문으로 센서 배치 
     for i in range(len(corners_cord)):
         sensor_instance = Sensor(map, corners_cord[i], sensor_coverage)
@@ -60,7 +60,7 @@ def __main__(map_input:str, sensor_coverage:int):
     return None
 
 
-__main__("rectangle_140by140", 2)
+__main__("rectangle_10by10", 1, 1,1)
 
 
 
