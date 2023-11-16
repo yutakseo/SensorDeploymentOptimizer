@@ -23,25 +23,28 @@ from cv_evaluation import *
 
 
 def __main__(map:str, sensor_coverage:int):
-    map_data = map
     start = time.time()
-    coners = None
-    dst = harris_corner(map, 2, 3, 0.01)
-    corners_position = VisualTool()
-    coners = createCordinate(binary_corner(dst))
-
+    #입력 디지털 맵의 정답데이터 호출
+    map_data_answer = str.join(str(map),"_ans")
+    
+    
+    #헤리스 탐색결과를 raw_corner로 전달
+    raw_corner = harris_corner(map, 2, 3, 0.01)
+    #헤리스 탐색결과를 이진화(0, 1)시켜서 좌표획득
+    coners = createCordinate(binary_corner(raw_corner))
+    #획득된 좌표를 반복문으로 센서 배치 
     for i in range(len(coners)):
         sensor_instance = Sensor(map, coners[i], sensor_coverage)
         sensor_instance.deploy_sensor()
 
-    map_data_answer = str.join(str(map),"_ans")
-    answer = createCordinate(map_data_answer)
+    
     end = time.time()
-    print("\n\nRuntime : "+str(end-start))
-    print("\nCV 정확도 : ",model_eval(map_data, map_data_answer))
-
     visual_tool  = VisualTool()
     visual_tool.showJetMap("test", map)
+    
+    print("\n\nRuntime : "+str(end-start))
+    print("\nCV 정확도 : ",model_eval(binary_corner(map), map_data_answer))
+    return None
 
-__main__(stair_10by10, 5)
+__main__(rectangle_10by10, 3)
 
