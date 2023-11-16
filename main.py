@@ -51,16 +51,16 @@ def __main__(map_input:str, sensor_coverage:int):
         sensor_instance.deploy_sensor()
 
     end = time.time()
+    print("\n\nRuntime : "+str(end-start))
+    print("\nCV 정확도 : ",model_eval(cvt_to_bi(corners_cord), eval(compare)))
     visual_tool  = VisualTool()
     visual_tool.show_jetmap("test", map)
     
-    print("\n\nRuntime : "+str(end-start))
-    print("\nCV 정확도 : ",model_eval(cvt_to_bi(corners_cord), compare))
     
     return None
 
 
-__main__("rectangle_10by10", 1)
+__main__("rectangle_140by140", 2)
 
 
 
