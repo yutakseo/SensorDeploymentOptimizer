@@ -60,7 +60,7 @@ def __main__(map_input:str, sensor_coverage:int, p1:int, p2:int):
     return None
 
 
-__main__("stair_140by140", 1, -1,1)
+__main__("rectangle_140by140", 1, -1,1)
 
 
 
