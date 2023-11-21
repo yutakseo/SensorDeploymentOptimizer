@@ -55,8 +55,3 @@ def cv_deploy(map_input:str, sensor_coverage:int, p1:int, p2:int):
     print("\nCV 정확도 : ",model_eval(cvt_to_bi(corners_cord), eval(compare)))
     
     return map
-
-#cv_deploy("rectangle_140by140", 1, -1,1)
-visual_tool  = VisualTool()
-visual_tool.show_jetmap("test", cv_deploy("rectangle_140by140", 30, -1,1))
-
