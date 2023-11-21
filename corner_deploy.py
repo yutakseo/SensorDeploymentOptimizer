@@ -35,7 +35,7 @@ def calibration(data, p1, p2):
                 grid.append(((j+p1),(i-p2)))
     return grid
     
-def __main__(map_input:str, sensor_coverage:int, p1:int, p2:int):
+def cv_deploy(map_input:str, sensor_coverage:int, p1:int, p2:int):
     start = time.time()
     #입력 디지털 맵의 정답데이터 호출
     compare = map_input + "_ans"
@@ -53,14 +53,10 @@ def __main__(map_input:str, sensor_coverage:int, p1:int, p2:int):
     end = time.time()
     print("\n\nRuntime : "+str(end-start))
     print("\nCV 정확도 : ",model_eval(cvt_to_bi(corners_cord), eval(compare)))
-    visual_tool  = VisualTool()
-    visual_tool.show_jetmap("test", map)
     
-    
-    return None
+    return map
 
-
-__main__("rectangle_140by140", 1, -1,1)
-
-
+#cv_deploy("rectangle_140by140", 1, -1,1)
+visual_tool  = VisualTool()
+visual_tool.show_jetmap("test", cv_deploy("rectangle_140by140", 30, -1,1))
 
