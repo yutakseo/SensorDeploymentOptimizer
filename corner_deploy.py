@@ -36,7 +36,6 @@ def calibration(data, p1, p2):
     return grid
     
 def cv_deploy(map_input:str, sensor_coverage:int, p1:int, p2:int):
-    start = time.time()
     #입력 디지털 맵의 정답데이터 호출
     compare = map_input + "_ans"
     map = eval(map_input)
@@ -50,8 +49,7 @@ def cv_deploy(map_input:str, sensor_coverage:int, p1:int, p2:int):
         sensor_instance = Sensor(map, corners_cord[i], sensor_coverage)
         sensor_instance.deploy_sensor()
 
-    end = time.time()
-    print("\n\nRuntime : "+str(end-start))
-    print("\nCV 정확도 : ",model_eval(cvt_to_bi(corners_cord), eval(compare)))
+    
+    #print("\nCV 정확도 : ",model_eval(cvt_to_bi(corners_cord), eval(compare)))
     
     return map

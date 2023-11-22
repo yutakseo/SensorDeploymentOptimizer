@@ -1,34 +1,44 @@
 import os, sys
 import numpy as np
+import time
 
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 
 visual_tool_dir_path = os.path.join(__file__,"VisualizationTool")
 sys.path.append(visual_tool_dir_path)
+sensor_module_path = os. path.join(__file__, "SensorModule")
+sys.path.append(sensor_module_path)
 
 from VisualizationModule import *
 from corner_deploy import *
+from Sensor import *
 
+start = time.time()
 
+def non_cover(map:list):
+    cord_list = []
+    for i in range(len(map)):
+        for j in range(len(map[0])):
+            if (map[i][j] == 1):
+                cord_list.append((j,i))
+    return cord_list
 
+def full_cover(map:list, cover):
+    cord_list = non_cover(map)
+    for i in range(len(cord_list)):
+        sensor_instance = Sensor(map, cord_list[i], cover)
+        sensor_instance.deploy_sensor()
+    return map
 
-def ga_eval(l:list):
-    for i in range(len(l)):
-        for j in range(len(l[0])):
-            if l[i][j] % 0:
-                grid_numb += 1
-            if (l[i][j] // 10) == 0:
-                #센서 커버리지 밖임을 표시
-                outter_numb += 1
-    coverage_percent = outter_numb/grid_numb *100
-    return coverage_percent
+def greedy_cover(map:list, cover):
+    cord_list = non_cover(map)
+    
 
+rawdata = cv_deploy("stair_140by140", 2, -1,1)
+end = time.time()
+print("\n\nRuntime : "+str(end-start))
 
-
-
-
-rawdata = cv_deploy("rectangle_140by140", 30, -1,1)
-
-visual_tool  = VisualTool()
-visual_tool.show_jetmap("test", rawdata)
+show = VisualTool()
+show.show_jetmap("test", full_cover(rawdata, 2))
+print("end")
