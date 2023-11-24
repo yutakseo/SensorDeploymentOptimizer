@@ -31,10 +31,8 @@ def full_cover(map:list, cover):
         sensor_instance.deploy_sensor()
     return map
 
-def greedy_cover(map:list, cover):
-    cord_list = non_cover(map)
     
-def eval():
+def eval(map:list):
     none_coverage = 0
     for i in range(len(map)):
         for j in range(len(map[0])):
@@ -44,11 +42,19 @@ def eval():
                 none_coverage += 1
     return none_coverage
 
+def greedy_cover(map:list, cover):
+    cord_list = non_cover(map)
+    while True:
+        evalue = eval(map) != 0
+        if evalue != 0:
+            evalue
+            #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
 
 rawdata = cv_deploy("truncated_140by140", 2, -1,1)
+result = full_cover(rawdata, 2)
 end = time.time()
 print("\n\nRuntime : "+str(end-start))
 
 show = VisualTool()
-show.show_jetmap("test", full_cover(rawdata, 2))
+show.show_jetmap("test", result)
 print("end")
