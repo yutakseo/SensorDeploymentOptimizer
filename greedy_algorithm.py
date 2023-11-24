@@ -34,8 +34,18 @@ def full_cover(map:list, cover):
 def greedy_cover(map:list, cover):
     cord_list = non_cover(map)
     
+def eval():
+    none_coverage = 0
+    for i in range(len(map)):
+        for j in range(len(map[0])):
+            if (map[i][j] // 10) != 0:
+                pass
+            elif (map[i][j] // 10) == 0:
+                none_coverage += 1
+    return none_coverage
 
-rawdata = cv_deploy("stair_140by140", 2, -1,1)
+
+rawdata = cv_deploy("truncated_140by140", 2, -1,1)
 end = time.time()
 print("\n\nRuntime : "+str(end-start))
 
