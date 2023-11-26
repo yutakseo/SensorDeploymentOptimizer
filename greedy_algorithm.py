@@ -12,7 +12,7 @@ sensor_module_path = os. path.join(__file__, "SensorModule")
 sys.path.append(sensor_module_path)
 
 from VisualizationModule import *
-from corner_deploy import *
+from corner_placement import *
 from Sensor import *
 
 #############################
@@ -62,6 +62,7 @@ def greedy_cover(map:list, cover):
     x = 0
     while True:
         used = combinations(cord_list, x)
+        print(used)
         for x in range(len(used)):
             sensor_instance = Sensor(map, used[x], cover)
             sensor_instance.deploy_sensor()
@@ -72,8 +73,8 @@ def greedy_cover(map:list, cover):
     
             #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
 
-rawdata = cv_deploy("truncated_140by140", 2, -1,1)
-result = full_cover(rawdata, 2)
+rawdata = corner_sensor_map(MAP, 10)
+result = greedy_cover(rawdata, 10)
 end = time.time()
 print("\n\nRuntime : "+str(end-start))
 
