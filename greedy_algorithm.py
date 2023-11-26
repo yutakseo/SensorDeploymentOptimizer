@@ -15,6 +15,23 @@ from VisualizationModule import *
 from corner_deploy import *
 from Sensor import *
 
+#############################
+
+map_data_dir_path = os.path.join(__file__,"MapData")
+visual_tool_dir_path = os.path.join(__file__,"VisualizationTool")
+sensor_module_path = os. path.join(__file__, "SensorModule")
+checker_module_path = os. path.join(__file__, "Checker")
+sys.path.append(map_data_dir_path)
+sys.path.append(visual_tool_dir_path)
+sys.path.append(sensor_module_path)
+sys.path.append(checker_module_path)
+
+from rectangle_140by140 import MAP, ANS
+from VisualizationModule import *
+from corner_placement import *
+
+#############################
+
 start = time.time()
 
 def non_cover(map:list):

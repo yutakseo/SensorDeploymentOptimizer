@@ -1,6 +1,6 @@
-import cv2, os, sys
+import cv2
 import numpy as np
-from edge_detector import ribosome
+
 
 
 #비전 데이터 값 중 최대값 추출
@@ -28,5 +28,8 @@ def calibration(data, p1, p2):
 #메인함수
 def corner(map:list, block_size:int, ksize:int, k:float, x:int,y:int):
     return calibration(binary_corner(harris_corner(map, block_size, ksize, k)), x, y)
+
+
+
 
 

@@ -1,11 +1,4 @@
-import math, os, sys
-__file__ = os.getcwd()
-__root__ = os.path.dirname(__file__)
-
-cv_module_path = os.path.join(__file__,"ComputerVisionModule")
-sys.path.append(cv_module_path)
-
-
+import math
 
 class Sensor:
     def __init__(self, map_data, sensor_position, coverage):
@@ -22,16 +15,9 @@ class Sensor:
 
                 if cell_length <= self.coverage:
                     self.map_data[i][j] += 10
-            non_coverd_area = self.map_data                
-        return self.map_data
+            coverd_area = self.map_data                
+        return coverd_area
     
-    '''
-    def non_coverd_area(self):
-        for i in range(0, len(self.map_data)):
-            for j in range(0, len(self.map_data[0])):
-                if self.map_data[i][j] == 1 :
-       '''             
-        
 
 
 
