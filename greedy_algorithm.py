@@ -44,11 +44,7 @@ def eval(map:list):
 
 def greedy_cover(map:list, cover):
     cord_list = non_cover(map)
-    while True:
-        evalue = eval(map) != 0
-        if evalue != 0:
-            evalue
-            return None
+    
             #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
 
 rawdata = cv_deploy("truncated_140by140", 2, -1,1)
