@@ -5,37 +5,22 @@ __root__ = os.path.dirname(__file__)
 
 map_data_dir_path = os.path.join(__file__,"MapData")
 visual_tool_dir_path = os.path.join(__file__,"VisualizationTool")
-corner_module_path = os.path.join(__file__,"CornerDetection")
+cv_module_path = os.path.join(__file__,"ComputerVisionModule")
 sensor_module_path = os. path.join(__file__, "SensorModule")
 checker_module_path = os. path.join(__file__, "Checker")
 sys.path.append(map_data_dir_path)
 sys.path.append(visual_tool_dir_path)
-sys.path.append(corner_module_path)
+sys.path.append(cv_module_path)
 sys.path.append(sensor_module_path)
 sys.path.append(checker_module_path)
 
-from TEST_DATASET import *
-from TEST_DATASET_ANSWER import *
+from rectengle_140by140 import MAP, ANS
+from corner_detector import corner
 from VisualizationModule import *
-from cornerDetector import *
 from Sensor import *
-from createArray import *
 
 
-def cvt_to_bi(matrix:list):
-    max_value = np.max(matrix)
-    binary_image = np.zeros_like(matrix, dtype=np.uint8)
-    binary_image[matrix == max_value] = 1 
-    return binary_image
 
-def calibration(data, p1, p2):
-    grid = []
-    for i in range(len(data)):
-        for j in range(len(data[0])):
-            if data[i][j] == 1:
-                grid.append(((j+p1),(i-p2)))
-    return grid
-    
 def cv_deploy(map_input:str, sensor_coverage:int, p1:int, p2:int):
     #입력 디지털 맵의 정답데이터 호출
     compare = map_input + "_ans"

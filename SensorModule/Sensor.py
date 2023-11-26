@@ -1,4 +1,11 @@
-import math
+import math, os, sys
+__file__ = os.getcwd()
+__root__ = os.path.dirname(__file__)
+
+cv_module_path = os.path.join(__file__,"ComputerVisionModule")
+sys.path.append(cv_module_path)
+
+
 
 class Sensor:
     def __init__(self, map_data, sensor_position, coverage):
