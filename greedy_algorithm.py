@@ -1,6 +1,7 @@
 import os, sys
 import numpy as np
 import time
+from itertools import combinations
 
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
@@ -44,6 +45,14 @@ def eval(map:list):
 
 def greedy_cover(map:list, cover):
     cord_list = non_cover(map)
+    for i in range(len(cord_list)):
+        used = combinations(cord_list, i)
+        for j in range(len(used)):
+            sensor_instance = Sensor(map, used[i], cover)
+            sensor_instance.deploy_sensor()
+        
+        eval(map)
+        
     
             #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
 
