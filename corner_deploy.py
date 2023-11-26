@@ -2,6 +2,7 @@ import os, sys, time
 import numpy as np
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
+
 map_data_dir_path = os.path.join(__file__,"MapData")
 visual_tool_dir_path = os.path.join(__file__,"VisualizationTool")
 corner_module_path = os.path.join(__file__,"CornerDetection")
@@ -19,7 +20,7 @@ from VisualizationModule import *
 from cornerDetector import *
 from Sensor import *
 from createArray import *
-from cv_evaluation import *
+
 
 def cvt_to_bi(matrix:list):
     max_value = np.max(matrix)

@@ -25,33 +25,32 @@ def non_cover(map:list):
                 cord_list.append((j,i))
     return cord_list
 
-def full_cover(map:list, cover):
+def fill_sensor(map:list, cover):
     cord_list = non_cover(map)
     for i in range(len(cord_list)):
         sensor_instance = Sensor(map, cord_list[i], cover)
         sensor_instance.deploy_sensor()
     return map
-
-    
-def eval(map:list):
-    none_coverage = 0
+   
+def is_full(map:list):
+    result = True
     for i in range(len(map)):
         for j in range(len(map[0])):
-            if (map[i][j] // 10) != 0:
-                pass
-            elif (map[i][j] // 10) == 0:
-                none_coverage += 1
-    return none_coverage
+            if (map[i][j] // 10) == 0:
+                result = False
+    return result
 
 def greedy_cover(map:list, cover):
     cord_list = non_cover(map)
-    for i in range(len(cord_list)):
-        used = combinations(cord_list, i)
-        for j in range(len(used)):
-            sensor_instance = Sensor(map, used[i], cover)
+    x = 0
+    while True:
+        used = combinations(cord_list, x)
+        for x in range(len(used)):
+            sensor_instance = Sensor(map, used[x], cover)
             sensor_instance.deploy_sensor()
-        
-        eval(map)
+        if eval(map) == True:
+            break
+    return map
         
     
             #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
