@@ -80,6 +80,7 @@ def combination_cover(map:list, cover):
     
             #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
 
+
 rawdata = corner_sensor_map(MAP, 6)
 result = rawdata
 #result = greedy_cover(rawdata, 50)
