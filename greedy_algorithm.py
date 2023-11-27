@@ -48,7 +48,7 @@ def fill_sensor(map:list, cover):
         sensor_instance = Sensor(map, cord_list[i], cover)
         sensor_instance.deploy_sensor()
     return map
-   
+
 def is_full(map:list):
     result = True
     for i in range(len(map)):
@@ -57,27 +57,44 @@ def is_full(map:list):
                 result = False
     return result
 
-def greedy_cover(map:list, cover):
-    cord_list = non_cover(map)
-    x = 0
-    while True:
-        used = combinations(cord_list, x)
-        print(used)
-        for x in range(len(used)):
-            sensor_instance = Sensor(map, used[x], cover)
-            sensor_instance.deploy_sensor()
-        if eval(map) == True:
+def combination_cover(map:list, cover):
+    cord_list = non_cover(map)  #[(1,1), (2,2), ...]
+    
+    i = 1
+    while i < len(cord_list):
+        greedy_cord = (list(combinations(cord_list, i)))
+        
+        print(greedy_cord)
+        
+        for j in range(len(greedy_cord)):    
+            for k in range(i):
+                sensor_instance = Sensor(map, (greedy_cord[j][k][0],greedy_cord[j][k][1]), cover)
+                sensor_instance.deploy_sensor()
+        
+        if is_full(map) == True:
             break
+        else:
+            i+=1
     return map
         
     
             #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
 
-rawdata = corner_sensor_map(MAP, 10)
-result = greedy_cover(rawdata, 10)
+rawdata = corner_sensor_map(MAP, 6)
+result = rawdata
+#result = greedy_cover(rawdata, 50)
+#result = fill_sensor(rawdata, 50)
 end = time.time()
 print("\n\nRuntime : "+str(end-start))
 
 show = VisualTool()
 show.show_jetmap("test", result)
 print("end")
+
+
+'''
+
+cord = [(1,1),(2,2),(3,3)]#,(4,4),(5,5),(6,6),(7,7)]
+result = list(combinations(cord, 2))
+print(result)
+'''

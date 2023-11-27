@@ -16,6 +16,6 @@ from VisualizationModule import *
 from corner_placement import *
 
 
-result = corner_sensor_map(deployed_map, 10)
+result = corner_sensor_map(MAP, 10)
 show = VisualTool()
 show.show_jetmap("test", result)
