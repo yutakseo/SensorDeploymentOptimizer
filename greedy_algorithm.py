@@ -26,7 +26,7 @@ sys.path.append(visual_tool_dir_path)
 sys.path.append(sensor_module_path)
 sys.path.append(checker_module_path)
 
-from rectangle_140by140 import MAP, ANS
+from stair_140by140 import MAP, ANS
 from VisualizationModule import *
 from corner_placement import *
 
@@ -81,10 +81,23 @@ def combination_cover(map:list, cover):
             #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
 
 
-rawdata = corner_sensor_map(MAP, 50)
+def greedy_algor(map:list, cover):
+    non_cord = non_cover(map)
+    fill_sensor(map, cover)
+    
+    for i in range(len(non_cord)):
+        sensor_instance = Sensor(map, non_cord[i], cover)
+        sensor_instance.withdraw_sensor()
+
+        if is_full(map) == False:
+            sensor_instance.deploy_sensor()
+    return map
+
+rawdata = corner_sensor_map(MAP, 15)
 #result = rawdata
-result = combination_cover(rawdata, 50)
+#result = combination_cover(rawdata, 50)
 #result = fill_sensor(rawdata, 50)
+result = greedy_algor(MAP,5)
 end = time.time()
 print("\n\nRuntime : "+str(end-start))
 
