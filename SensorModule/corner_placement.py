@@ -7,9 +7,9 @@ sys.path.append(cv_module_path)
 from corner_detector import corner
 
 
-def corner_sensor_map(map:list, coverage:int):
+def corner_sensor_map(map:list, coverage:int, x,y):
     #헤리스 탐색결과를 통한 좌표획득(map, block_size, ksize, k, x,y --> 보정)
-    corners_cord = corner(map, 2, 3, 0.01, 0,0)
+    corners_cord = corner(map, 2, 3, 0.01, x,y)
     #획득된 좌표를 반복문으로 센서 배치 
     for i in range(len(corners_cord)):
         sensor_instance = Sensor(map, corners_cord[i], coverage)

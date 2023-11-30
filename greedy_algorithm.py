@@ -6,33 +6,13 @@ from itertools import combinations
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 
-visual_tool_dir_path = os.path.join(__file__,"VisualizationTool")
-sys.path.append(visual_tool_dir_path)
+
 sensor_module_path = os. path.join(__file__, "SensorModule")
 sys.path.append(sensor_module_path)
-
-from VisualizationModule import *
-from corner_placement import *
 from Sensor import *
-
-#############################
-
-map_data_dir_path = os.path.join(__file__,"MapData")
-visual_tool_dir_path = os.path.join(__file__,"VisualizationTool")
-sensor_module_path = os. path.join(__file__, "SensorModule")
-checker_module_path = os. path.join(__file__, "Checker")
-sys.path.append(map_data_dir_path)
-sys.path.append(visual_tool_dir_path)
-sys.path.append(sensor_module_path)
-sys.path.append(checker_module_path)
-
-from stair_140by140 import MAP, ANS
-from VisualizationModule import *
 from corner_placement import *
 
-#############################
 
-start = time.time()
 
 def non_cover(map:list):
     cord_list = []
@@ -50,12 +30,19 @@ def fill_sensor(map:list, cover):
     return map
 
 def is_full(map:list):
-    result = True
+    true = 0
+    false = 0
     for i in range(len(map)):
         for j in range(len(map[0])):
-            if (map[i][j] // 10) == 0:
-                result = False
-    return result
+            if map[i][j] == 1:    
+                if (map[i][j] // 10) != 0:
+                    true += 1
+                else:
+                    false += 1
+    if false > 0:
+        return False
+    else:
+        return True
 
 def combination_cover(map:list, cover):
     cord_list = non_cover(map)  #[(1,1), (2,2), ...]
@@ -80,35 +67,20 @@ def combination_cover(map:list, cover):
     
             #좌표리스트에서 좌표들을 제거하는 알고리즘 개발 필요!!!
 
-
-def greedy_algor(map:list, cover):
-    non_cord = non_cover(map)
-    fill_sensor(map, cover)
+def greedy_algorithm(map:list, cover):
+    data = corner_sensor_map(map, cover, 0,0)
+    none_coverd_area = non_cover(data)
+    cord = []
     
-    for i in range(len(non_cord)):
-        sensor_instance = Sensor(map, non_cord[i], cover)
-        sensor_instance.withdraw_sensor()
-
+    full_map = fill_sensor(data, cover)
+    for i in range(len(none_coverd_area)):
+        temp_sensor = Sensor(map, none_coverd_area[i], cover) 
+        temp_sensor.withdraw_sensor()
+        #show.show_jetmap("",data)
+        
         if is_full(map) == False:
-            sensor_instance.deploy_sensor()
-    return map
-
-rawdata = corner_sensor_map(MAP, 15)
-#result = rawdata
-#result = combination_cover(rawdata, 50)
-#result = fill_sensor(rawdata, 50)
-result = greedy_algor(MAP,5)
-end = time.time()
-print("\n\nRuntime : "+str(end-start))
-
-show = VisualTool()
-show.show_jetmap("test", result)
-print("end")
-
-
-'''
-
-cord = [(1,1),(2,2),(3,3)]#,(4,4),(5,5),(6,6),(7,7)]
-result = list(combinations(cord, 2))
-print(result)
-'''
+            cord.append(none_coverd_area[i])
+            temp_sensor.deploy_sensor()
+        elif is_full(map) ==True:
+            pass
+    return cord
