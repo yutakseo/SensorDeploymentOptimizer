@@ -84,3 +84,22 @@ def greedy_algorithm(map:list, cover):
         elif is_full(map) ==True:
             pass
     return cord
+
+def greedy_algorithm2(map_data, cover):
+    # 맵 복사
+    current_map = [row[:] for row in map_data]
+    # 처음에는 모든 위치가 후보
+    candidate_positions = non_cover(map_data)
+    while candidate_positions:
+        # 후보 위치 중 하나를 선택
+        current_position = candidate_positions.pop()
+        # 센서 배치
+        sensor_instance = Sensor(current_map, current_position, cover)
+        sensor_instance.deploy_sensor()
+        # 만약 맵이 전부 채워졌다면 종료
+        if is_full(current_map):
+            break
+        # 새롭게 미방문인 위치들을 후보로 업데이트
+        candidate_positions = [pos for pos in non_cover(current_map) if pos not in candidate_positions]
+
+    return current_map
