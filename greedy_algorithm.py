@@ -30,8 +30,8 @@ def fill_sensor(map:list, cover):
     return map
 
 def is_full(map:list):
-    true = 0
-    false = 0
+    true = 0 #yes
+    false = 0 #no
     for i in range(len(map)):
         for j in range(len(map[0])):
             if map[i][j] == 1:    
@@ -73,33 +73,42 @@ def greedy_algorithm(map:list, cover):
     cord = []
     
     full_map = fill_sensor(data, cover)
-    for i in range(len(none_coverd_area)):
+    for i in range(0, len(none_coverd_area)):
         temp_sensor = Sensor(map, none_coverd_area[i], cover) 
         temp_sensor.withdraw_sensor()
         #show.show_jetmap("",data)
         
         if is_full(map) == False:
-            cord.append(none_coverd_area[i])
             temp_sensor.deploy_sensor()
+            cord.append(none_coverd_area[i])
         elif is_full(map) ==True:
             pass
     return cord
 
-def greedy_algorithm2(map_data, cover):
-    # 맵 복사
-    current_map = [row[:] for row in map_data]
-    # 처음에는 모든 위치가 후보
-    candidate_positions = non_cover(map_data)
-    while candidate_positions:
-        # 후보 위치 중 하나를 선택
-        current_position = candidate_positions.pop()
-        # 센서 배치
-        sensor_instance = Sensor(current_map, current_position, cover)
-        sensor_instance.deploy_sensor()
-        # 만약 맵이 전부 채워졌다면 종료
-        if is_full(current_map):
-            break
-        # 새롭게 미방문인 위치들을 후보로 업데이트
-        candidate_positions = [pos for pos in non_cover(current_map) if pos not in candidate_positions]
+def greedy_algorithm2(map:list, coverage):
+    data = corner_sensor_map(map, coverage, 0,0)
+    none_coverd_area = non_cover(data) #커버되지 않은 영역의 좌표추출
+    
+    cord = []
+    full_map = fill_sensor(data, coverage) #커버되지 않은 영역들 모두 센서 배치
+    for i in range(0,len(none_coverd_area)):    #0번째 좌표부터 마지막까지 반복
+        if is_full(map) == True:  #모두 커버하고 있다면 --> (해당좌표)센서 제거
+            s = Sensor(map, none_coverd_area[i], coverage)
+            s.withdraw_sensor()
+        elif is_full(map) == False: #모두 커버하고 있지 않다면 --> (이전 좌표)센서 설치
+            s = Sensor(map, none_coverd_area[i-1], coverage)
+            s.deploy_sensor()
+            cord.append(none_coverd_area[i-1]) #이전 좌표 기록
+    return cord
 
-    return current_map
+
+        
+'''   
+temp = [[0,0,0,0,0],
+        [0,1,10,10,0],
+        [0,10,10,10,0],
+        [0,10,10,10,0],
+        [0,0,0,0,0]]
+
+print(is_full(temp))
+'''
