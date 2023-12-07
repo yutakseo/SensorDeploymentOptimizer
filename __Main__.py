@@ -8,27 +8,28 @@ dir = ["MapData","VisualizationTool","SensorModule","Checker","OUTPUT"]
 for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
 
-from rectangle_140by140 import MAP
 from VisualizationModule import *
 from corner_placement import *
 from greedy_algorithm import *
 
-
-temp = corner_sensor_map(MAP, 6, 0,0)
-show = VisualTool()
-show.show_jetmap("",MAP)
+#!맵데이터 입력 : from [맵데이터_이름] <- 입력
+from rectangle_140by140 import MAP
 start = time.time()
 
-temp = greedy_algorithm2(MAP, 6)
-print(temp)
-for i in range(len(temp)):
-    se = Sensor(MAP, temp[i], 6)
+#!센서 탐지 반경 입력 : sensor_coverage = [반경] <- 입력
+sensor_coverage = 10
+dst = greedy_algorithm2(MAP, sensor_coverage)
+
+
+for i in range(len(dst)):
+    se = Sensor(MAP, dst[i], sensor_coverage)
     se.deploy_sensor()
-print("배치 센서 수 : ",len(temp))
-
-
 end = time.time()
+
+
+print("배치 센서 수 : ",len(dst))
+print(dst)
 print(f"Runtime : {end-start:.4f}sec")
-show2 = VisualTool()
-show2.show_jetmap("",MAP)
+view = VisualTool()
+view.show_jetmap("",MAP)
 to_xlsx(MAP)

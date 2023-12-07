@@ -100,15 +100,3 @@ def greedy_algorithm2(map:list, coverage):
             s.deploy_sensor()
             cord.append(none_coverd_area[i-1]) #이전 좌표 기록
     return cord
-
-
-        
-'''   
-temp = [[0,0,0,0,0],
-        [0,1,10,10,0],
-        [0,10,10,10,0],
-        [0,10,10,10,0],
-        [0,0,0,0,0]]
-
-print(is_full(temp))
-'''
