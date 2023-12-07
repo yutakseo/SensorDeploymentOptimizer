@@ -13,23 +13,14 @@ from corner_placement import *
 from greedy_algorithm import *
 
 #!맵데이터 입력 : from [맵데이터_이름] <- 입력
-from rectangle_140by140 import MAP
-start = time.time()
+from stair_10by10 import MAP
+
 
 #!센서 탐지 반경 입력 : sensor_coverage = [반경] <- 입력
-sensor_coverage = 10
+sensor_coverage = 1
+
+#!알고리즘 적용 : dst = [최적화 알고리즘(MAP, sensor_coverage)] <- 입력
 dst = greedy_algorithm2(MAP, sensor_coverage)
-
-
-for i in range(len(dst)):
-    se = Sensor(MAP, dst[i], sensor_coverage)
-    se.deploy_sensor()
-end = time.time()
-
-
-print("배치 센서 수 : ",len(dst))
-print(dst)
-print(f"Runtime : {end-start:.4f}sec")
 view = VisualTool()
 view.show_jetmap("",MAP)
 to_xlsx(MAP)

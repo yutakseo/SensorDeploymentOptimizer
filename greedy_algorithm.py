@@ -86,6 +86,7 @@ def greedy_algorithm(map:list, cover):
     return cord
 
 def greedy_algorithm2(map:list, coverage):
+    start = time.time()
     data = corner_sensor_map(map, coverage, 0,0)
     none_coverd_area = non_cover(data) #커버되지 않은 영역의 좌표추출
     
@@ -99,4 +100,14 @@ def greedy_algorithm2(map:list, coverage):
             s = Sensor(map, none_coverd_area[i-1], coverage)
             s.deploy_sensor()
             cord.append(none_coverd_area[i-1]) #이전 좌표 기록
+    
+    for i in range(len(cord)):
+        se = Sensor(map, cord[i], coverage)
+        se.deploy_sensor()
+    end = time.time()
+
+
+    print("배치 센서 수 : ",len(cord))
+    print(cord)
+    print(f"Runtime : {end-start:.4f}sec")
     return cord
