@@ -13,11 +13,11 @@ from corner_placement import *
 from greedy_algorithm import *
 
 #!맵데이터 입력 : from [맵데이터_이름] <- 입력
-from stair_10by10 import MAP
+from truncated_140by140 import MAP
 
 
 #!센서 탐지 반경 입력 : sensor_coverage = [반경] <- 입력
-sensor_coverage = 1
+sensor_coverage = 40
 
 #!알고리즘 적용 : dst = [최적화 알고리즘(MAP, sensor_coverage)] <- 입력
 dst = greedy_algorithm2(MAP, sensor_coverage)
