@@ -110,3 +110,13 @@ def greedy_algorithm2(map:list, coverage):
     print(cord)
     print(f"Runtime : {end-start:.4f}sec")
     return cord
+
+
+MAP = [
+            [0,0,0,0,0,0],
+            [0,1,1,1,1,0],
+            [0,1,1,1,1,0],
+            [0,0,0,0,0,0]
+             ]
+greedy_algorithm2(MAP, 1)
+print(MAP)
