@@ -13,11 +13,11 @@ from corner_placement import *
 from greedy_algorithm import *
 
 #!맵데이터 입력 : from [맵데이터_이름] <- 입력
-from long_1by10 import MAP
+from rectangle_140by140 import MAP
 
 
 #!센서 탐지 반경 입력 : sensor_coverage = [반경] <- 입력
-sensor_coverage = 1
+sensor_coverage = 6
 
 #!알고리즘 적용 : dst = [최적화 알고리즘(MAP, sensor_coverage)] <- 입력
 #dst = greedy_algorithm2(MAP, sensor_coverage)
@@ -25,3 +25,4 @@ dst = greedy_algorithm2(MAP, sensor_coverage)
 view = VisualTool()
 view.show_jetmap("",MAP)
 to_xlsx(MAP)
+
