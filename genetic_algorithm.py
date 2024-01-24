@@ -9,7 +9,6 @@ for i in range(len(map_data)):
     for j in range(len(map_data[0])):
         if map_data[i][j] == 1:
             chromsome.append(0)
-            
 print(chromsome)
 
 
@@ -18,7 +17,7 @@ num_parents_mating = 10
 sol_per_pop = 30
 num_genes = len(chromsome)
 
-#유전 함수 작성
+#유전 함수 작성(랜덤함수 적용)
 function_inputs = [1 for i in range(num_genes)]
 #기대값 설정
 desired_output = 0
