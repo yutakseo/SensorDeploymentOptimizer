@@ -13,7 +13,7 @@ from corner_placement import *
 from greedy_algorithm import *
 
 #!맵데이터 입력 : from [맵데이터_이름] <- 입력
-from rectangle_140by140 import MAP
+from truncated_140by140 import MAP
 
 
 #!센서 탐지 반경 입력 : sensor_coverage = [반경] <- 입력
