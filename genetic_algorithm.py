@@ -3,15 +3,14 @@ import os, sys, random, copy, numpy
 
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
-dir = ["MapData","SensorModule", "VisualizationTool"]
+dir = ["MapData","SensorModule"]
 for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
 from Sensor import *
-from truncated_10by10 import MAP
-from VisualizationModule import *
+from truncated_140by140 import MAP
 
 map_data = MAP
-vi = VisualTool()
+
 
 
 chromsome = []
@@ -22,8 +21,8 @@ for i in range(len(map_data)):
 
 
 generations = 100
-num_parents_mating = 4
-sol_per_pop = 8
+num_parents_mating = 8
+sol_per_pop = 24
 num_genes = len(chromsome)
 
 #초기 염색체 생성 함수 작성
@@ -82,3 +81,4 @@ solution, solution_fitness, solution_idx = ga_instance.best_solution(ga_instance
 print("Parameters of the best solution : {solution}".format(solution=solution))
 print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
 print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
+ga_instance.plot_fitness() 
