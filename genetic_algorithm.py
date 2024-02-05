@@ -1,5 +1,5 @@
 import pygad
-import os, sys, random, copy, numpy, time
+import os, sys, gc, random, copy, numpy, time
 
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
@@ -7,7 +7,7 @@ dir = ["MapData","SensorModule"]
 for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
 from Sensor import *
-from truncated_10by10 import MAP
+from truncated_140by140 import MAP
 
 start = time.time()
 map_data = MAP
@@ -20,7 +20,7 @@ for i in range(len(map_data)):
             chromsome.append(random.choice([0,1])) #초기 염색체 생성 시 수정가능 영역
 
 
-generations = 30
+generations = 100
 num_parents_mating = 8
 sol_per_pop = 24
 num_genes = len(chromsome)
@@ -63,7 +63,8 @@ def fitness_func(ga_instance, solution, solution_idx):
 last_fitness = 0
 def on_generation(ga_instance):
     global last_fitness
-    time.sleep(2)
+    #Sleep
+    #time.sleep(2)
     print("Generation = {generation}".format(generation=ga_instance.generations_completed))
     print("Fitness    = {fitness}".format(fitness=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]))
     print("Change     = {change}".format(change=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1] - last_fitness))
@@ -88,4 +89,5 @@ print("Index of the best solution : {solution_idx}".format(solution_idx=solution
 
 end = time.time()
 print("Runtime : ", end - start)
-ga_instance.plot_fitness() 
+ga_instance.plot_fitness()
+gc.collect()
