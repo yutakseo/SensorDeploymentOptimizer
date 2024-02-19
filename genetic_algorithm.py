@@ -39,7 +39,7 @@ def fitness_func(ga_instance, solution, solution_idx):
     data = copy.deepcopy(map_data)
     cov = 1
     ref_data = copy.deepcopy(data)
-    n = 0
+    n = 0 
     for i in range(len(ref_data)):
         for j in range(len(ref_data[0])):
             if ref_data[i][j] == 1:

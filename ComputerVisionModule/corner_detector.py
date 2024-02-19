@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 
 
-
 #비전 데이터 값 중 최대값 추출
 def binary_corner(corner_image):
     max_value = np.max(corner_image)
