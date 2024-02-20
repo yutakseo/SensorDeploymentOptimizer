@@ -1,7 +1,31 @@
-def ribosome(input):
+import cv2
+import numpy as np
+
+
+class ComputerVision():
+    def __init__(self, map):
+        self.map = map
+
+    def harris_corner(self, block_size, ksize, k):
+        self.temp = np.array(self.map, dtype=np.uint8)
+        self.result = cv2.cornerHarris(self.temp, block_size, ksize, k)
+
+        
+        max_val = np.max(self.result)
+        binary_image = np.zeros_like(self.result, dtype=np.uint8)
+        binary_image[self.result == max_val] = 1 
+        
+        grid = []
+        for i in range(len(binary_image)):
+            for j in range(len(binary_image[0])):
+                if binary_image[i][j] == 1:
+                    grid.append(((j),(i)))
+        return grid
+    
+    def edge_detector(self):
 #행방향 변환작업
         row_converted_data = []
-        input_data = input
+        input_data = self.map
         for i in range(len(input_data)): #세로축 반복
                 row_data = []
                 for j in range(len(input_data[0])): #가로축 반복
@@ -19,7 +43,6 @@ def ribosome(input):
                 row_data.append(0)
                 row_converted_data.append(row_data)
         
-
     #열방향 변환작업
         column_converted_data = []        
         for j in range(len(input_data)):
@@ -39,7 +62,6 @@ def ribosome(input):
                 column_converted_data.append(column_data)  
                     
         
-    
     #행변환 배열과 열변환 배열 통합
         converted_data = []
         for i in range(len(row_converted_data)):
@@ -52,5 +74,3 @@ def ribosome(input):
                 converted_data.append(raw_data)
         
         return converted_data
-
-

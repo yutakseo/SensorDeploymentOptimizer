@@ -1,14 +1,14 @@
 import math, numpy as np
 
 class Sensor:
-    def __init__(self, MAP, sensor_position:tuple, coverage:int):
+    def __init__(self, MAP):
         self.map_data = np.array(MAP)
-        self.sensor_position = sensor_position
-        self.coverage = coverage - 1
         self.width = self.map_data.shape[1]
         self.height = self.map_data.shape[0]
         
-    def deploy_sensor(self):    
+    def deploy(self, sensor_position:tuple, coverage:int):
+        self.sensor_position = sensor_position
+        self.coverage = coverage - 1    
         for i in range(0, self.height):
             for j in range(0, self.width):
                 x_length = self.sensor_position[0] - (j+1) #가로축 길이
@@ -17,7 +17,9 @@ class Sensor:
                     self.map_data[i][j] += 10    
         return self.map_data
     
-    def retrieve_sensor(self):
+    def retrieve(self, sensor_position:tuple, coverage:int):
+        self.sensor_position = sensor_position
+        self.coverage = coverage - 1
         for i in range(0, self.height):
             for j in range(0, self.width):
                 x_length = self.sensor_position[0] - (j+1) #가로축 길이
@@ -28,3 +30,7 @@ class Sensor:
                     else:
                         pass    
         return self.map_data
+    
+    def result(self):
+        return self.map_data
+

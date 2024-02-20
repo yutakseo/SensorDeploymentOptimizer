@@ -9,7 +9,7 @@ for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
 
 from VisualizationModule import *
-from corner_placement import *
+from corner_map import *
 from greedy_algorithm import *
 from genetic_algorithm2 import *
 
@@ -27,5 +27,5 @@ a = SensorGA(20, 8, 4, MAP, 6)
 a.run()
 view = VisualTool()
 view.show_jetmap("",MAP)
-to_xlsx(MAP)
+#to_xlsx(MAP)
 
