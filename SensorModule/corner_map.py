@@ -1,5 +1,5 @@
 import os, sys, numpy as np
-from Sensor_class import Sensor
+from Sensor import Sensor
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 cv_module_path = os.path.join(__file__,"ComputerVisionModule")
