@@ -47,8 +47,8 @@ class SensorGA:
                 for j in range(len(ref_data[0])):
                     if ref_data[i][j] == 1:
                         if chrom[n] == 1:
-                            se = Sensor(data, (j, i), cov)
-                            se.deploy_sensor()
+                            se = Sensor(self.map_data)
+                            se.deploy((j, i), self.coverage)
                         n += 1
         
             total_cells = 0
@@ -73,10 +73,10 @@ class SensorGA:
             print("Change     = {change}".format(change=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1] - last_fitness))
             last_fitness = ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]    
             
-        ga_instance = pygad.GA(num_generations=generations,
-                            num_parents_mating=num_parents_mating,
-                            sol_per_pop=sol_per_pop,
-                            num_genes=num_genes,
+        ga_instance = pygad.GA(num_generations=self.generations,
+                            num_parents_mating=self.num_parents_mating,
+                            sol_per_pop=self.sol_per_pop,
+                            num_genes=self.num_genes,
                             gene_type=int,
                             gene_space=range_ben,
                             fitness_func=fitness_func,

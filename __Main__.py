@@ -21,14 +21,12 @@ from truncated_140by140 import MAP
 #!센서 탐지 반경 입력 : sensor_coverage = [반경] <- 입력
 sensor_coverage = 10
 
+
 #!알고리즘 적용 : dst = [최적화 알고리즘(MAP, sensor_coverage)] <- 입력
-#dst = greedy_algorithm2(MAP, sensor_coverage)
-result = GreedyAlgorithm(MAP, sensor_coverage)
-dst = result.run()
+dst = 
+a = SensorGA(20, 4, 4, MAP, 6,)
+a.run()
 
-
-#a = SensorGA(20, 8, 4, MAP, 6)
-#a.run()
 view = VisualTool()
 view.show_jetmap("", dst)
 
