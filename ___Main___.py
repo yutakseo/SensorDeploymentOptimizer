@@ -7,7 +7,6 @@ dir = ["MapData","ComputerVisionModule","Algorithm","VisualizationTool","SensorM
 for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
 from VisualizationModule import *
-from Algorithm.greedy_algorithm import *
 from cv_detector import *
 from Sensor import Sensor
 
@@ -16,7 +15,7 @@ from Sensor import Sensor
 #사용할 건설현장 맵 선택
 from rectangle_140by140 import MAP
 #센서 커버리지
-coverage = 2
+coverage = 20
 #사용할 알고리즘 선택
 from genetic_algorithm_2 import *
 
@@ -32,7 +31,8 @@ corner_deployed_map = sensor.result()
 vis.show_jetmap("test", corner_deployed_map)
 
 
-dst = sensor_GA(corner_deployed_map, coverage, 10)
+#dst = sensor_GA(corner_deployed_map, coverage, 10)
+dst = sensor_GA(MAP, coverage, 10)
 
 
 

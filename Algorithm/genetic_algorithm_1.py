@@ -7,7 +7,7 @@ dir = ["MapData","SensorModule"]
 for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
 from Sensor import *
-from truncated_140by140 import MAP
+from truncated_10by10 import MAP
 
 start = time.time()
 map_data = MAP
@@ -44,8 +44,8 @@ def fitness_func(ga_instance, solution, solution_idx):
         for j in range(len(ref_data[0])):
             if ref_data[i][j] == 1:
                 if chrom[n] == 1:
-                    se = Sensor(data, (j, i), cov)
-                    se.deploy_sensor()
+                    se = Sensor(data)
+                    se.deploy((j, i), cov)
                 n += 1
    
     total_cells = 0
