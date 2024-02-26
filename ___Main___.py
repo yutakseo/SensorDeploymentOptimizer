@@ -29,10 +29,10 @@ for i in range(len(corner_position)):
 corner_deployed_map = sensor.result()
 
 
+vis.show_jetmap("test", corner_deployed_map)
+
 
 dst = sensor_GA(corner_deployed_map, coverage, 10)
 
-
-#vis.show_jetmap("test", dst)
 
 
