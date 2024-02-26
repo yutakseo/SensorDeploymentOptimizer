@@ -7,12 +7,10 @@ dir = ["MapData","Algorithm","VisualizationTool","SensorModule","Checker","OUTPU
 
 for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
-
 from VisualizationModule import *
 from corner_map import *
 from Algorithm.greedy_algorithm import *
-from Algorithm.Greedy_Algorithm2 import *
-from Algorithm.genetic_algorithm2 import *
+
 
 #!맵데이터 입력 : from [맵데이터_이름] <- 입력
 from truncated_140by140 import MAP

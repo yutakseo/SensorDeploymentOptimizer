@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-
 class ComputerVision():
     def __init__(self, map):
         self.map = map
