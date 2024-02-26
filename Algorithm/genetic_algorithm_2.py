@@ -34,7 +34,7 @@ def sensor_GA(MAP, cov_range, gen):
 
 
     #적합도 함수 작성   
-    def fitness_func(ga_instance, solution, solution_idx):
+    def fitness_func(ga_instance, solution,  solution_idx):
         chrom = solution
         data = copy.deepcopy(map_data)
         cov = cov_range
