@@ -6,18 +6,22 @@ __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
 
+
+
 class sensor_GA:
     def __init__(self, MAP, coverage, gen):
         self.map_data = numpy.array(MAP)
         self.coverage = coverage
         self.generations = gen
         chromsome = []
+        cord_dic = {}
         for i in range(self.map_data.shape[0]):
             for j in range(self.map_data.shape[1]):
                 if self.map_data[i][j] == 1:
-                    chromsome.append(random.choice([0,1]))
+                    chromsome.append(0)
+                    cord_dic[(j, i)] = 1
                     
-        self.gen = gen
+
         self.num_of_parents_mating = 8
         self.solutions_per_pop = 24
         self.num_of_genes = len(chromsome)
@@ -59,14 +63,14 @@ class sensor_GA:
         return covered_cells / total_cells * 100
     
     def on_generation(self, ga_instance):
-        #Sleep
-        time.sleep(2)
         print("Generation = {generation}".format(generation=ga_instance.generations_completed))
         print("Fitness    = {fitness}".format(fitness=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]))
         print("Change     = {change}".format(change=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1] - self.last_fitness))
         last_fitness = ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]
+        return last_fitness
         
     def run(self):
+        start = time.time()
         ga_instance = pygad.GA(num_generations = self.generations,
                         num_parents_mating = self.num_of_parents_mating,
                         sol_per_pop = self.solutions_per_pop,
@@ -77,10 +81,16 @@ class sensor_GA:
                         on_generation = self.on_generation)
         
         ga_instance.run()
+        
         solution, solution_fitness, solution_idx = ga_instance.best_solution(ga_instance.last_generation_fitness)
         print("Parameters of the best solution : {solution}".format(solution=solution))
         print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
         print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
-        ga_instance.plot_fitness()
         
-        return None
+        end = time.time() -start
+        print("경과시간(초) : ",end)
+        
+        ga_instance.plot_fitness()
+        sol_list = solution.tolist()
+        return sol_list, cord_dic
+        

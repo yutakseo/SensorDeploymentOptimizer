@@ -13,7 +13,7 @@ from Sensor_ import Sensor
 
 
 #사용할 건설현장 맵 선택
-from rectangle_140by140 import MAP
+from stair_140by140 import MAP
 #사용할 알고리즘 선택
 from genetic_algorithm import *
 #센서 커버리지
@@ -26,12 +26,13 @@ sensor = Sensor(MAP)
 for i in range(len(corner_position)):
     sensor.deploy(corner_position[i], coverage)
 MAP = sensor.result()
-print(1//10)
 
-#vis.show_jetmap("",MAP)
+
+vis.show_jetmap("",MAP)
 
 #알고리즘 선택
-sensor_GA(MAP, coverage, 10).run()
 
+chrom = sensor_GA(MAP, coverage, 3).run()
 
+print(chrom)
 
