@@ -9,7 +9,7 @@ __root__ = os.path.dirname(__file__)
 
 sensor_module_path = os. path.join(__file__, "SensorModule")
 sys.path.append(sensor_module_path)
-from Sensor import *
+from Sensor_ import *
 from corner_map import *
 
 

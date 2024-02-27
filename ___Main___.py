@@ -8,7 +8,8 @@ for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
 from VisualizationModule import *
 from cv_detector import *
-from Sensor import Sensor
+from Sensor_ import Sensor
+from sensor_GA import *
 
 
 
@@ -17,7 +18,7 @@ from rectangle_140by140 import MAP
 #센서 커버리지
 coverage = 20
 #사용할 알고리즘 선택
-from genetic_algorithm_2 import *
+from genetic_algorithm_3 import *
 
 
 vis = VisualTool()
@@ -28,11 +29,9 @@ for i in range(len(corner_position)):
 corner_deployed_map = sensor.result()
 
 
-vis.show_jetmap("test", corner_deployed_map)
-
-
 #dst = sensor_GA(corner_deployed_map, coverage, 10)
-dst = sensor_GA(MAP, coverage, 10)
+
+se = sensor_GA(MAP, coverage, 10).run()
 
 
 

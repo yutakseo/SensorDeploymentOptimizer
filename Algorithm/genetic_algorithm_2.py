@@ -7,11 +7,10 @@ sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
 
 
-start = time.time()
 
-global last_fitness
-last_fitness = 0
+
 def sensor_GA(MAP, cov_range, gen):
+    start = time.time()
     map_data = MAP
     chromsome = []
     for i in range(len(map_data)):
@@ -28,7 +27,7 @@ def sensor_GA(MAP, cov_range, gen):
     #초기 염색체 생성 함수 작성
     function_inputs = chromsome
     #기대값 설정
-    desired_output = gen
+    desired_output = 100
     #유전자 해 범위 설정
     range_ben = [{"low": 0,"high":1.1} for i in range(num_genes)]
 
@@ -40,11 +39,11 @@ def sensor_GA(MAP, cov_range, gen):
         cov = cov_range
         ref_data = copy.deepcopy(data)
         n = 0 
+        se = Sensor(data)
         for i in range(len(ref_data)):
             for j in range(len(ref_data[0])):
                 if ref_data[i][j] == 1:
                     if chrom[n] == 1:
-                        se = Sensor(data)
                         se.deploy((j,i), cov)
                     n += 1
     
@@ -61,6 +60,7 @@ def sensor_GA(MAP, cov_range, gen):
 
 
     
+
     def on_generation(ga_instance):
         last_fitness = 0
         #Sleep
