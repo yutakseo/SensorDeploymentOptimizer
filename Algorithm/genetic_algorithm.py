@@ -6,12 +6,6 @@ __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
 
-MAP = [[0,0,0,0,0],
-       [0,1,1,1,0],
-       [0,1,1,1,0],
-       [0,1,1,1,0],
-       [0,0,0,0,0]]
-
 class sensor_GA:
     def __init__(self, MAP, coverage, gen):
         self.map_data = numpy.array(MAP)
@@ -22,7 +16,6 @@ class sensor_GA:
             for j in range(self.map_data.shape[1]):
                 if self.map_data[i][j] == 1:
                     chromsome.append(random.choice([0,1]))
-        print(chromsome)
                     
         self.gen = gen
         self.num_of_parents_mating = 8
@@ -50,7 +43,7 @@ class sensor_GA:
             for j in range(len(ref_data[0])):
                 if ref_data[i][j] == 1:
                     if chrom[n] == 1:
-                        se.deploy((j,i), self.coverage)
+                        data = se.deploy((j,i), self.coverage)
                     n += 1
 
         #배치된 센서의 커버리지 영역 평가
@@ -91,6 +84,3 @@ class sensor_GA:
         ga_instance.plot_fitness()
         
         return None
-    
-    
-sensor_GA(MAP, 2, 10).run()
