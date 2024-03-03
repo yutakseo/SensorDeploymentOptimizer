@@ -31,8 +31,8 @@ MAP = sensor.result()
 vis.show_jetmap("",MAP)
 
 #알고리즘 선택
+chrom, cord = sensor_GA(MAP, coverage, 3).run()
 
-chrom = sensor_GA(MAP, coverage, 3).run()
-
-print(chrom)
+print(len(cord))
+print(len(chrom))
 

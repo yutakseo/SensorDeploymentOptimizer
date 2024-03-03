@@ -12,14 +12,14 @@ class sensor_GA:
     def __init__(self, MAP, coverage, gen):
         self.map_data = numpy.array(MAP)
         self.coverage = coverage
-        self.generations = gen
+        self.generations = gen/
         chromsome = []
-        cord_dic = {}
+        self.cord_dic = {}
         for i in range(self.map_data.shape[0]):
             for j in range(self.map_data.shape[1]):
                 if self.map_data[i][j] == 1:
                     chromsome.append(0)
-                    cord_dic[(j, i)] = 1
+                    self.cord_dic[(j, i)] = 1
                     
 
         self.num_of_parents_mating = 8
@@ -92,5 +92,5 @@ class sensor_GA:
         
         ga_instance.plot_fitness()
         sol_list = solution.tolist()
-        return sol_list, cord_dic
+        return sol_list, self.cord_dic
         
