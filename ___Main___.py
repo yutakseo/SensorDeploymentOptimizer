@@ -8,7 +8,7 @@ for d in dir:
     sys.path.append(os.path.join(__file__,f"{d}"))
 from VisualizationModule import *
 from cv_detector import *
-from Sensor_ import Sensor
+from Sensor import Sensor
 
 
 
@@ -28,10 +28,8 @@ for i in range(len(corner_position)):
 MAP = sensor.result()
 
 
-vis.show_jetmap("",MAP)
-
 #알고리즘 선택
-cord = sensor_GA(MAP, coverage, 3).run()
+cord = sensor_GA(MAP, coverage, 10).run()
 
 
 #알고리즘으로 추출된 센서 배치

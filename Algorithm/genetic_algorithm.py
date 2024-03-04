@@ -87,9 +87,8 @@ class sensor_GA:
         print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
         print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
         
-        end = time.time() -start
-        print("경과시간(초) : ",end)
         
+        print(f"경과시간(초) : {time.time() -start:.4f}sec")
         ga_instance.plot_fitness()
         sol_list = solution.tolist()
         
