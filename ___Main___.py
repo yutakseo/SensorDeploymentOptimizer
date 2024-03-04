@@ -31,8 +31,14 @@ MAP = sensor.result()
 vis.show_jetmap("",MAP)
 
 #알고리즘 선택
-chrom, cord = sensor_GA(MAP, coverage, 3).run()
+cord = sensor_GA(MAP, coverage, 3).run()
 
-print(len(cord))
-print(len(chrom))
 
+#알고리즘으로 추출된 센서 배치
+for i in range(len(cord)):
+    sensor.deploy(cord[i], coverage)
+MAP = sensor.result()
+
+#결과출력
+vis.show_jetmap("",MAP)
+print("배치된 센서 수 : ", len(cord))

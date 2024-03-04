@@ -12,7 +12,7 @@ class sensor_GA:
     def __init__(self, MAP, coverage, gen):
         self.map_data = numpy.array(MAP)
         self.coverage = coverage
-        self.generations = gen/
+        self.generations = gen
         chromsome = []
         self.cord_dic = {}
         for i in range(self.map_data.shape[0]):
@@ -92,5 +92,13 @@ class sensor_GA:
         
         ga_instance.plot_fitness()
         sol_list = solution.tolist()
-        return sol_list, self.cord_dic
+        
+        
+        positions = list(self.cord_dic.keys())
+        cord = []
+        for i in range(len(sol_list)):
+            if sol_list[i] == 1:
+                cord.append(positions[i])
+       
+        return cord
         
