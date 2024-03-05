@@ -9,11 +9,11 @@ __root__ = os.path.dirname(__file__)
 
 sensor_module_path = os. path.join(__file__, "SensorModule")
 sys.path.append(sensor_module_path)
-from Sensor_ import *
-from corner_map import *
+#from Sensor_ import *
+#from corner_map import *
 
 
-class GreedyAlgorithm:
+class sensor_greedy:
     def __init__(self, MAP:list, coverage:int) -> None:
         self.map = np.array(MAP)
         self.coverage = coverage
@@ -53,7 +53,7 @@ class GreedyAlgorithm:
                 return True
             
         start = time.time()
-        data = CornerMap(self.map, self.coverage)
+        data = self.map #CornerMap(self.map, self.coverage)
         map = data.deploy_corner()
         none_coverd_area = non_cover(self.map) #커버되지 않은 영역의 좌표추출
         
@@ -67,13 +67,9 @@ class GreedyAlgorithm:
                 s.deploy(none_coverd_area[i], self.coverage)
                 cord.append(none_coverd_area[i-1]) #이전 좌표 기록
         
-        se = Sensor(map)
-        for i in range(len(cord)):
-            se.deploy(cord[i], self.coverage)
-        end = time.time()
 
 
         print("배치 센서 수 : ",len(cord))
-        print(cord)
+ 
         print(f"Runtime : {end-start:.4f}sec")
-        return se.result()
+        return cord
