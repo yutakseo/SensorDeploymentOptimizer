@@ -14,7 +14,7 @@ from Sensor import Sensor
 from stair_140by140 import MAP
 #사용할 알고리즘 임포트
 from genetic_algorithm import *
-from greedy_algorithm2 import *
+#from greedy_algorithm2 import *
 
 
 

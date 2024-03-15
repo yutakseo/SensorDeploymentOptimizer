@@ -78,7 +78,8 @@ class sensor_GA:
                         gene_type = int,
                         gene_space = self.range_ben,
                         fitness_func = self.fitness_func,
-                        on_generation = self.on_generation)
+                        on_generation = self.on_generation,
+                        parallel_processing=24)
         
         ga_instance.run()
         
