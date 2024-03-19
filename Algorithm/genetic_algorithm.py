@@ -5,16 +5,18 @@ __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
+sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
+from ref_example import ref_MAP
+
+'''
 sys.path.append(os.path.join(__file__,"MapData"))
 from example import MAP
 sys.path.append(os.path.join(__file__,"VisualizationTool"))
 from VisualizationModule import *
-sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
-from ref_example import ref_MAP
-
 a= VisualTool()
 a.show_jetmap("",MAP)
 a.show_jetmap("",ref_MAP)
+'''
 
 class sensor_GA:
     def __init__(self, MAP, coverage, gen):
