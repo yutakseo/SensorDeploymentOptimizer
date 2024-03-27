@@ -6,7 +6,7 @@ __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
 sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
-from ref_example import ref_MAP
+#from ref_example import ref_MAP
 
 '''
 sys.path.append(os.path.join(__file__,"MapData"))
@@ -76,8 +76,8 @@ class sensor_GA:
         print("Generation = {generation}".format(generation=ga_instance.generations_completed))
         print("Fitness    = {fitness}".format(fitness=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]))
         print("Change     = {change}".format(change=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1] - self.last_fitness))
-        last_fitness = ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]
-        return last_fitness
+        self.last_fitness = ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]
+        return self.last_fitness
         
     def run(self):
         start = time.time()

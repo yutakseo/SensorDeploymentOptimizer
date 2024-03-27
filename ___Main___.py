@@ -11,7 +11,7 @@ from cv_detector import *
 from Sensor import Sensor
 
 #사용할 건설현장 맵 선택
-from rectangle_140by140 import MAP
+from example import MAP, REF
 #사용할 알고리즘 임포트
 from genetic_algorithm import *
 #from greedy_algorithm2 import *
@@ -19,7 +19,7 @@ from genetic_algorithm import *
 
 
 #센서 커버리지 설정
-coverage = 30
+coverage = 5
 
 #최외곽 센서 배치
 corner_position = ComputerVision(MAP).harris_corner(2, 3, 0.01)
