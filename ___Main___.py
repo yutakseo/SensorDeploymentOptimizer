@@ -11,7 +11,7 @@ from cv_detector import *
 from Sensor import Sensor
 
 #사용할 건설현장 맵 선택
-from example import MAP, REF
+from stair_140by140 import *
 #사용할 알고리즘 임포트
 from genetic_algorithm import *
 #from greedy_algorithm2 import *
@@ -19,8 +19,14 @@ from genetic_algorithm import *
 
 
 #센서 커버리지 설정
-coverage = 5
-
+coverage = 20
+'''
+sensor = Sensor(MAP)
+corner_position =[(65,70), (90,90)]
+for i in range(len(corner_position)):
+    sensor.deploy(corner_position[i], coverage)
+MAP = sensor.result()
+'''
 #최외곽 센서 배치
 corner_position = ComputerVision(MAP).harris_corner(2, 3, 0.01)
 sensor = Sensor(MAP)
@@ -29,7 +35,7 @@ for i in range(len(corner_position)):
 MAP = sensor.result()
 
 #알고리즘 선택
-cord = sensor_GA(MAP, coverage, 10).run()
+cord = sensor_GA(MAP, coverage, 10000).run()
 #cord = sensor_greedy(MAP, coverage).run()
 
 #알고리즘으로 추출된 센서 배치

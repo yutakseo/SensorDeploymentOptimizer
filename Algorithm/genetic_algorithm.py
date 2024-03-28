@@ -67,8 +67,14 @@ class sensor_GA:
             for j in range(len(ref_data[0])):
                 if ref_data[i][j] == 1:
                     total_cells += 1
-                    if data[i][j] // 10 != 0:
+                    if data[i][j] // 10 == 1:
                         covered_cells += 1
+                    elif data[i][j] // 10 >=2:
+                        covered_cells += 0.2
+                    elif data[i][j] // 10 >=10:
+                        covered_cells -= 10 
+                    else:
+                        covered_cells -= 1
         
         return covered_cells / total_cells * 100
     
@@ -89,6 +95,7 @@ class sensor_GA:
                         gene_space = self.range_ben,
                         fitness_func = self.fitness_func,
                         on_generation = self.on_generation,
+                        stop_criteria=["reach_80.0", "saturate_100"],
                         parallel_processing=24)
         
         ga_instance.run()
