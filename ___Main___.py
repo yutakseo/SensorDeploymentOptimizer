@@ -20,13 +20,7 @@ from genetic_algorithm import *
 
 #센서 커버리지 설정
 coverage = 20
-'''
-sensor = Sensor(MAP)
-corner_position =[(65,70), (90,90)]
-for i in range(len(corner_position)):
-    sensor.deploy(corner_position[i], coverage)
-MAP = sensor.result()
-'''
+
 #최외곽 센서 배치
 corner_position = ComputerVision(MAP).harris_corner(2, 3, 0.01)
 sensor = Sensor(MAP)

@@ -8,15 +8,6 @@ from Sensor import *
 sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
 #from ref_example import ref_MAP
 
-'''
-sys.path.append(os.path.join(__file__,"MapData"))
-from example import MAP
-sys.path.append(os.path.join(__file__,"VisualizationTool"))
-from VisualizationModule import *
-a= VisualTool()
-a.show_jetmap("",MAP)
-a.show_jetmap("",ref_MAP)
-'''
 
 class sensor_GA:
     def __init__(self, MAP, coverage, gen):
@@ -32,8 +23,8 @@ class sensor_GA:
                     self.cord_dic[(j, i)] = 1
                     
 
-        self.num_of_parents_mating = 8
-        self.solutions_per_pop = 24
+        self.num_of_parents_mating = 6
+        self.solutions_per_pop = 48
         self.num_of_genes = len(chromsome)
         self.last_fitness = 0
         
@@ -62,24 +53,25 @@ class sensor_GA:
 
         #배치된 센서의 커버리지 영역 평가
         total_cells = 0
-        covered_cells = 0
+        score = 0
         for i in range(len(ref_data)):
             for j in range(len(ref_data[0])):
                 if ref_data[i][j] == 1:
                     total_cells += 1
-                    if data[i][j] // 10 == 1:
+                    score += -0.8*(data[i][j]-ref_data[i][j])**2+1
+                    """if data[i][j] // 10 == 1:
                         covered_cells += 1
                     elif data[i][j] // 10 >=2:
                         covered_cells += 0.2
-                    elif data[i][j] // 10 >=10:
-                        covered_cells -= 10 
+                    elif data[i][j] // 10 >=5:
+                        covered_cells -= 100000 
                     else:
-                        covered_cells -= 1
-        
-        return covered_cells / total_cells * 100
+                        covered_cells -= 1"""
+        del data, ref_data
+        return round(score / total_cells * 100,5)
     
     def on_generation(self, ga_instance):
-        print("Generation = {generation}".format(generation=ga_instance.generations_completed))
+        print("\nGeneration = {generation}".format(generation=ga_instance.generations_completed))
         print("Fitness    = {fitness}".format(fitness=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]))
         print("Change     = {change}".format(change=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1] - self.last_fitness))
         self.last_fitness = ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]
@@ -94,8 +86,12 @@ class sensor_GA:
                         gene_type = int,
                         gene_space = self.range_ben,
                         fitness_func = self.fitness_func,
+                        parent_selection_type="rank",
+                        crossover_type="scattered",
+                        mutation_type="adaptive",
+                        mutation_probability=[0.8, 0.5],
                         on_generation = self.on_generation,
-                        stop_criteria=["reach_80.0", "saturate_100"],
+                        stop_criteria=["reach_80.0", "saturate_50"],
                         parallel_processing=24)
         
         ga_instance.run()
