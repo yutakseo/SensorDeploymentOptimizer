@@ -20,7 +20,7 @@ class Sensor:
                     map_data[i, j] += 10
         return map_data
 
-    def _retrieve_kernel(map_data, sensor_position, coverage):
+    def _retrieve_kernel(self, map_data, sensor_position, coverage):
         height, width = map_data.shape
         for i in prange(height):
             for j in prange(width):
@@ -39,7 +39,7 @@ class Sensor:
 
     def retrieve(self, sensor_position: tuple, coverage: int):
         self.sensor_position = sensor_position
-        self.coverage = coverage - 1
+        self.coverage = coverage -1
         self.map_data = self._retrieve_kernel(self.map_data, sensor_position, self.coverage)
         return self.map_data
 
