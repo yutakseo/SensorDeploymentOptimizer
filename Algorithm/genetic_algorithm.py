@@ -1,5 +1,5 @@
 import pygad
-import os, sys, gc, random, copy, numpy, time
+import os, sys, gc, random, copy, numpy
 
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
@@ -78,7 +78,7 @@ class sensor_GA:
         return self.last_fitness
         
     def run(self):
-        start = time.time()
+        
         ga_instance = pygad.GA(num_generations = self.generations,
                         num_parents_mating = self.num_of_parents_mating,
                         sol_per_pop = self.solutions_per_pop,
@@ -102,8 +102,8 @@ class sensor_GA:
         print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
         
         
-        print(f"경과시간(초) : {time.time() -start:.4f}sec")
-        ga_instance.plot_fitness()
+        
+        #ga_instance.plot_fitness()
         sol_list = solution.tolist()
         
         
@@ -112,6 +112,6 @@ class sensor_GA:
         for i in range(len(sol_list)):
             if sol_list[i] == 1:
                 cord.append(positions[i])
-       
+
         return cord
         

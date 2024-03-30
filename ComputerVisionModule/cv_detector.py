@@ -4,10 +4,10 @@ import numpy as np
 class ComputerVision():
     def __init__(self, map):
         self.map = map
-
+        self.map_data = np.array(self.map, dtype=np.uint8)
+   
     def harris_corner(self, block_size, ksize, k):
-        self.temp = np.array(self.map, dtype=np.uint8)
-        self.result = cv2.cornerHarris(self.temp, block_size, ksize, k)
+        self.result = cv2.cornerHarris(self.map_data, block_size, ksize, k)
 
         
         max_val = np.max(self.result)
