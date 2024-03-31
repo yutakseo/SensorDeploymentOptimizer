@@ -50,14 +50,14 @@ class Main:
         return (runtime, numb_of_sensors)
     
 
-#계단형 
+'''#계단형 
 result = []
 for i in range(100):
     test = Main.run(stair_MAP, 20, 50)
     print(test)
     result.append(test)
 to_xlsx(result, "stair")
-
+'''
 #직사각형
 result = []
 for i in range(100):
@@ -66,10 +66,10 @@ for i in range(100):
     result.append(test)
 to_xlsx(result, "rectangle")
 
-#한쪽면이 깎인
+'''#한쪽면이 깎인
 result = []
 for i in range(100):
     test = Main.run(truncated_MAP, 20, 50)
     print(test)
     result.append(test)
-to_xlsx(result, "truncated")
+to_xlsx(result, "truncated")'''
