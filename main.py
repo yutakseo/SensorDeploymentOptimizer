@@ -59,17 +59,19 @@ for i in range(100):
 to_xlsx(result, "stair")
 '''
 #직사각형
-result = []
-for i in range(100):
+'''result = []
+for i in range(20):
     test = Main.run(rectangle_MAP, 20, 50)
     print(test)
     result.append(test)
 to_xlsx(result, "rectangle")
+'''
 
-'''#한쪽면이 깎인
+#한쪽면이 깎인
 result = []
-for i in range(100):
+for i in range(20):
     test = Main.run(truncated_MAP, 20, 50)
     print(test)
     result.append(test)
-to_xlsx(result, "truncated")'''
+to_xlsx(result, "truncated1")
+
