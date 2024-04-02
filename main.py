@@ -46,7 +46,7 @@ class Main:
         print(f"경과시간(초) : {runtime:.4f}sec")
 
         #결과출력
-        #vis.show_jetmap("",MAP)
+        vis.show_jetmap("",MAP)
         return (runtime, numb_of_sensors)
     
 
@@ -69,8 +69,8 @@ to_xlsx(result, "rectangle")
 
 #한쪽면이 깎인
 result = []
-for i in range(20):
-    test = Main.run(truncated_MAP, 20, 50)
+for i in range(1):
+    test = Main.run(truncated_MAP, 20, 10000)
     print(test)
     result.append(test)
 to_xlsx(result, "truncated1")

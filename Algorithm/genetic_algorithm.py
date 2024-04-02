@@ -103,7 +103,7 @@ class sensor_GA:
         
         
         
-        #ga_instance.plot_fitness()
+        ga_instance.plot_fitness()
         sol_list = solution.tolist()
         
         
