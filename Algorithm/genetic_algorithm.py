@@ -32,7 +32,7 @@ class sensor_GA:
         function_inputs = chromsome
         #기대값 설정
         desired_output = 100
-        #유전자 해범위 설정 
+        #유전자 해범위 설정
         self.range_ben = [{"low": 0,"high":1.1} for i in range(self.num_of_genes)]
 
         

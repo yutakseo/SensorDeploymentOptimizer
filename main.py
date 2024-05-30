@@ -24,6 +24,7 @@ class Main:
         
         vis = VisualTool()
         start = time.time()
+        vis.show_jetmap("",MAP)
         #최외곽 센서 배치
         corner_position = ComputerVision(MAP).harris_corner(2, 3, 0.01)
         sensor = Sensor(MAP)
@@ -50,28 +51,34 @@ class Main:
         return (runtime, numb_of_sensors)
     
 
-'''#계단형 
-result = []
-for i in range(100):
-    test = Main.run(stair_MAP, 20, 50)
-    print(test)
-    result.append(test)
-to_xlsx(result, "stair")
+#계단형 
 '''
-#직사각형
-'''result = []
-for i in range(20):
-    test = Main.run(rectangle_MAP, 20, 50)
+result = []
+for i in range(1):
+    test = Main.run(stair_MAP, 20, 1)
     print(test)
     result.append(test)
-to_xlsx(result, "rectangle")
+to_xlsx(result, "stair1")
+'''
+
+#직사각형
+'''
+result = []
+for i in range(1):
+    test = Main.run(rectangle_MAP, 20, 1)
+    print(test)
+    result.append(test)
+to_xlsx(result, "rectangle1")
 '''
 
 #한쪽면이 깎인
+'''
 result = []
 for i in range(1):
     test = Main.run(truncated_MAP, 20, 10000)
     print(test)
     result.append(test)
 to_xlsx(result, "truncated1")
+'''
 
+Main.run(stair_MAP, 20, 1)
