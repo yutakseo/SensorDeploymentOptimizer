@@ -14,7 +14,6 @@ from MapData.stair_140by140 import *
 from Algorithm.genetic_algorithm import *
 from Algorithm.Greedy_Algorithm2 import *
 
-
 class Main:
     def run(MAP, COV, GEN):
         #센서 커버리지 설정
@@ -81,4 +80,10 @@ for i in range(1):
 to_xlsx(result, "truncated1")
 '''
 
-Main.run(stair_MAP, 20, 1)
+if __name__ == "__main__":
+    result = []
+    for i in range(1):
+        test = Main.run(rectangle_MAP, 20, 50)
+        print(test)
+        result.append(test)
+    to_xlsx(result, "rectangle1")
