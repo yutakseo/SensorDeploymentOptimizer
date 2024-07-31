@@ -14,7 +14,6 @@ from MapData.stair_140by140 import *
 from Algorithm.genetic_algorithm import *
 from Algorithm.Greedy_Algorithm2 import *
 
-print("hi")
 class Main:
     def run(MAP, COV, GEN):
         #센서 커버리지 설정
