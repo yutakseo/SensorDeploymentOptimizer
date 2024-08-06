@@ -10,9 +10,10 @@ from SensorModule.Sensor import Sensor
 from MapData.rectangle_140by140 import *
 from MapData.truncated_140by140 import *
 from MapData.stair_140by140 import *
-#사용할 알고리즘 임포트 
+
+#사용할 알고리즘
 from Algorithm.genetic_algorithm import *
-from Algorithm.Greedy_Algorithm2 import *
+
 
 class Main:
     def run(MAP, COV, GEN):
@@ -23,7 +24,8 @@ class Main:
         
         vis = VisualTool()
         start = time.time()
-        vis.show_jetmap("",MAP)
+        #vis.show_jetmap("",MAP)
+        
         #최외곽 센서 배치
         corner_position = ComputerVision(MAP).harris_corner(2, 3, 0.01)
         sensor = Sensor(MAP)
@@ -44,46 +46,16 @@ class Main:
         runtime = time.time() -start
         print("배치된 센서 수 : ", numb_of_sensors)
         print(f"경과시간(초) : {runtime:.4f}sec")
+        print(cord)
 
         #결과출력
         vis.show_jetmap("",MAP)
-        return (runtime, numb_of_sensors)
+        return (runtime ,numb_of_sensors, cord)
     
-
-#계단형 
-'''
-result = []
-for i in range(1):
-    test = Main.run(stair_MAP, 20, 1)
-    print(test)
-    result.append(test)
-to_xlsx(result, "stair1")
-'''
-
-#직사각형
-'''
-result = []
-for i in range(1):
-    test = Main.run(rectangle_MAP, 20, 1)
-    print(test)
-    result.append(test)
-to_xlsx(result, "rectangle1")
-'''
-
-#한쪽면이 깎인
-'''
-result = []
-for i in range(1):
-    test = Main.run(truncated_MAP, 20, 10000)
-    print(test)
-    result.append(test)
-to_xlsx(result, "truncated1")
-'''
 
 if __name__ == "__main__":
     result = []
     for i in range(1):
-        test = Main.run(rectangle_MAP, 20, 50)
-        print(test)
+        test = Main.run(rectangle_MAP, 20, 1)
         result.append(test)
     to_xlsx(result, "rectangle1")
