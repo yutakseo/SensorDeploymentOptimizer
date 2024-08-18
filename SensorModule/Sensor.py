@@ -1,4 +1,5 @@
-import math, numpy as np
+import math
+import numpy as np
 from numba import njit, prange
 
 
@@ -10,20 +11,20 @@ class Sensor:
         
     @staticmethod
     @njit(parallel=True)
-    def _deploy_kernel(map_data, sensor_position, coverage):
-        height, width = map_data.shape
-        for i in prange(height):
-            for j in prange(width):
+    def _deploy_kernel(map_data, sensor_position, coverage, height, width):
+        for i in prange(max(0, sensor_position[1] - coverage), min(height, sensor_position[1] + coverage + 1)):
+            for j in prange(max(0, sensor_position[0] - coverage), min(width, sensor_position[0] + coverage + 1)):
                 x_length = sensor_position[0] - (j + 1)
                 y_length = sensor_position[1] - (i + 1)
                 if (x_length ** 2) + (y_length ** 2) <= (coverage ** 2):
                     map_data[i, j] += 10
         return map_data
 
-    def _retrieve_kernel(self, map_data, sensor_position, coverage):
-        height, width = map_data.shape
-        for i in prange(height):
-            for j in prange(width):
+    @staticmethod
+    @njit(parallel=True)
+    def _retrieve_kernel(map_data, sensor_position, coverage, height, width):
+        for i in prange(max(0, sensor_position[1] - coverage), min(height, sensor_position[1] + coverage + 1)):
+            for j in prange(max(0, sensor_position[0] - coverage), min(width, sensor_position[0] + coverage + 1)):
                 x_length = sensor_position[0] - (j + 1)
                 y_length = sensor_position[1] - (i + 1)
                 if (x_length ** 2) + (y_length ** 2) <= (coverage ** 2):
@@ -34,13 +35,13 @@ class Sensor:
     def deploy(self, sensor_position: tuple, coverage: int):
         self.sensor_position = sensor_position
         self.coverage = coverage - 1
-        self.map_data = self._deploy_kernel(self.map_data, sensor_position, self.coverage)
+        self.map_data = self._deploy_kernel(self.map_data, sensor_position, self.coverage, self.height, self.width)
         return self.map_data
 
     def retrieve(self, sensor_position: tuple, coverage: int):
         self.sensor_position = sensor_position
-        self.coverage = coverage -1
-        self.map_data = self._retrieve_kernel(self.map_data, sensor_position, self.coverage)
+        self.coverage = coverage - 1
+        self.map_data = self._retrieve_kernel(self.map_data, sensor_position, self.coverage, self.height, self.width)
         return self.map_data
 
     def result(self):

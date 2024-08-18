@@ -7,7 +7,8 @@ from ComputerVisionModule.cv_detector import *
 from SensorModule.Sensor import Sensor
 
 #사용할 건설현장 맵 선택
-from MapData.truncated_140by140 import *
+#from MapData.truncated_140by140 import *
+from MapData.example import *
 
 #사용할 알고리즘
 from Algorithm.genetic_algorithm import *
@@ -47,12 +48,13 @@ class Main:
 
         #결과출력
         vis.show_jetmap("",MAP)
+        
         return (runtime ,numb_of_sensors, cord)
     
 
 if __name__ == "__main__":
     result = []
     for i in range(1):
-        test = Main.run(truncated_MAP, 2, 1)
+        test = Main.run(MAP, 4, 1000)
         result.append(test)
     to_xlsx(result, "rectangle1")
