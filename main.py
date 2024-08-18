@@ -7,7 +7,7 @@ from ComputerVisionModule.cv_detector import *
 from SensorModule.Sensor import Sensor
 
 #사용할 건설현장 맵 선택
-from MapData.rectangle_10by10 import *
+from MapData.truncated_140by140 import *
 
 #사용할 알고리즘
 from Algorithm.genetic_algorithm import *
@@ -40,7 +40,6 @@ class Main:
         for i in range(numb_of_sensors):
             sensor.deploy(cord[i], coverage)
         MAP = sensor.result()
-
         runtime = time.time() -start
         print("배치된 센서 수 : ", numb_of_sensors)
         print(f"경과시간(초) : {runtime:.4f}sec")
@@ -54,6 +53,6 @@ class Main:
 if __name__ == "__main__":
     result = []
     for i in range(1):
-        test = Main.run(MAP, 3, 100)
+        test = Main.run(truncated_MAP, 2, 1)
         result.append(test)
     to_xlsx(result, "rectangle1")
