@@ -7,9 +7,6 @@ from ComputerVisionModule.cv_detector import *
 from SensorModule.Sensor import Sensor
 
 #사용할 건설현장 맵 선택
-#from MapData.rectangle_140by140 import *
-#from MapData.truncated_140by140 import *
-#from MapData.stair_140by140 import *
 from MapData.example import *
 
 #사용할 알고리즘
@@ -57,6 +54,6 @@ class Main:
 if __name__ == "__main__":
     result = []
     for i in range(1):
-        test = Main.run(MAP, 5, 3000)
+        test = Main.run(MAP, 2, 3000)
         result.append(test)
     to_xlsx(result, "rectangle1")

@@ -20,6 +20,7 @@ class sensor_GA:
             for j in range(self.map_data.shape[1]):
                 if self.map_data[i][j] == 1:
                     chromsome.append(random.choices([0,1],[0.7,0.3])[0])
+                    #chromsome.append(0)
                     self.cord_dic[(j, i)] = 1
         print(chromsome)            
                     
@@ -35,7 +36,7 @@ class sensor_GA:
         #기대값 설정
         desired_output = 100
         #유전자 해범위 설정
-        self.range_ben = [{"low": 0,"high":2} for i in range(self.num_of_genes)]
+        self.range_ben = [{"low": 0,"high":1.5} for i in range(self.num_of_genes)]
 
         
     def fitness_func(self, ga_instance, solution, solution_idx):
