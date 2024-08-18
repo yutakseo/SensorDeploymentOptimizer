@@ -1,29 +1,33 @@
 import pygad
-import os, sys, gc, random, copy, numpy
+import os, sys, random, copy
+import numpy as np
+from datetime import datetime
 
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
 sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
-#from ref_example import ref_MAP
 
 
 class sensor_GA:
-    def __init__(self, MAP, coverage, gen):
-        self.map_data = numpy.array(MAP)
+    def __init__(self, map, coverage, generation):
+        self.map_data = np.array(map)
         self.coverage = coverage
-        self.generations = gen
+        self.generations = generation
         chromsome = []
         self.cord_dic = {}
-        for i in range(self.map_data.shape[0]):
-            for j in range(self.map_data.shape[1]):
-                if self.map_data[i][j] == 1:
-                    chromsome.append(random.choices([0,1],[0.7,0.3])[0])
-                    #chromsome.append(0)
-                    self.cord_dic[(j, i)] = 1
-        print(chromsome)            
-                    
+                
+        positions = np.argwhere(self.map_data >= 1)
+        
+        #기존에 사용하던 방식(초기 염색체 = 0)
+        #chromsome = np.zeros(shape=positions.shape[0], dtype=int)
+        #개선 방식(초기 염색체 = 랜덤)
+        chromsome = np.random.choice([0,1], size=positions.shape[0], p=[0.7, 0.3])
+        print(chromsome)
+        
+        chromsome = chromsome.tolist()
+        self.cord_dic = {tuple(pos): 1 for pos in positions}
         
 
         self.num_of_parents_mating = 6
@@ -37,10 +41,10 @@ class sensor_GA:
         desired_output = 100
         #유전자 해범위 설정
         self.range_ben = [{"low": 0,"high":1.5} for i in range(self.num_of_genes)]
-
         
     def fitness_func(self, ga_instance, solution, solution_idx):
         chrom = solution
+        
         data = copy.deepcopy(self.map_data)
         ref_data = copy.deepcopy(data)
         n = 0
@@ -73,7 +77,6 @@ class sensor_GA:
         return self.last_fitness
         
     def run(self):
-        
         ga_instance = pygad.GA(num_generations = self.generations,
                         num_parents_mating = self.num_of_parents_mating,
                         sol_per_pop = self.solutions_per_pop,
@@ -96,6 +99,7 @@ class sensor_GA:
         print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
         print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
         
+        ga_instance.save(str(datetime.now().strftime('%y%m%d')))
         
         
         ga_instance.plot_fitness()
@@ -109,4 +113,3 @@ class sensor_GA:
                 cord.append(positions[i])
 
         return cord
-        
