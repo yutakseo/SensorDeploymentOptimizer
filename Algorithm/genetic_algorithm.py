@@ -19,9 +19,11 @@ class sensor_GA:
         for i in range(self.map_data.shape[0]):
             for j in range(self.map_data.shape[1]):
                 if self.map_data[i][j] == 1:
-                    chromsome.append(0)
+                    chromsome.append(random.choices([0,1],[0.7,0.3])[0])
                     self.cord_dic[(j, i)] = 1
+        print(chromsome)            
                     
+        
 
         self.num_of_parents_mating = 6
         self.solutions_per_pop = 48
@@ -33,7 +35,7 @@ class sensor_GA:
         #기대값 설정
         desired_output = 100
         #유전자 해범위 설정
-        self.range_ben = [{"low": 0,"high":1.1} for i in range(self.num_of_genes)]
+        self.range_ben = [{"low": 0,"high":2} for i in range(self.num_of_genes)]
 
         
     def fitness_func(self, ga_instance, solution, solution_idx):
@@ -59,14 +61,6 @@ class sensor_GA:
                 if ref_data[i][j] == 1:
                     total_cells += 1
                     score += -0.8*(data[i][j]-ref_data[i][j])**2+1
-                    """if data[i][j] // 10 == 1:
-                        covered_cells += 1
-                    elif data[i][j] // 10 >=2:
-                        covered_cells += 0.2
-                    elif data[i][j] // 10 >=5:
-                        covered_cells -= 100000 
-                    else:
-                        covered_cells -= 1"""
         del data, ref_data
         return round(score / total_cells * 100,5)
     
@@ -91,7 +85,7 @@ class sensor_GA:
                         mutation_type="adaptive",
                         mutation_probability=[0.8, 0.5],
                         on_generation = self.on_generation,
-                        stop_criteria=["reach_80.0", "saturate_50"],
+                        stop_criteria=["reach_80.0", "saturate_5000"],
                         parallel_processing=24)
         
         ga_instance.run()
