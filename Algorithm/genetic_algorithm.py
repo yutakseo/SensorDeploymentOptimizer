@@ -6,7 +6,7 @@ from datetime import datetime
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
-from Sensor_GPU import *
+from Sensor import *
 sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
 
 
@@ -20,10 +20,8 @@ class sensor_GA:
                 
         positions = np.argwhere(self.map_data >= 1)
         
-        #기존에 사용하던 방식(초기 염색체 = 0)
-        #chromsome = np.zeros(shape=positions.shape[0], dtype=int)
-        #개선 방식(초기 염색체 = 랜덤)
-        chromsome = np.random.choice([0,1], size=positions.shape[0], p=[0.75, 0.25])
+        #init_chromsome_setting
+        chromsome = np.random.choice([0,1], size=positions.shape[0], p=[0.55, 0.45])
         print(chromsome)
         
         chromsome = chromsome.tolist()
