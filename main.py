@@ -7,10 +7,10 @@ from ComputerVisionModule.cv_detector import *
 from SensorModule.Sensor import Sensor
 
 #사용할 건설현장 맵 선택
-from __MAPS__.truncated_140by140 import *
+from __MAPS__.rectangle_140by140 import *
 
 #사용할 알고리즘
-from Algorithm.genetic_algorithm2 import *
+from Algorithm.genetic_algorithm import *
 
 
 class Main:
@@ -20,7 +20,6 @@ class Main:
         MAP = MAP
         GEN = GEN
         
-        vis = VisualTool()
         start = time.time()
         #vis.show_jetmap("",MAP)
         
@@ -47,7 +46,7 @@ class Main:
 
         #결과출력
         
-        sensor_plot()
+        sensor_plot(MAP)
         return (runtime ,numb_of_sensors, cord)
     
 

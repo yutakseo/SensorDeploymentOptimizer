@@ -1,7 +1,5 @@
 import numpy as np
 from scipy.ndimage import distance_transform_edt
-from SensorPlot import *
-from rectangle_140by140 import *
 
 
 class Sensor:
@@ -43,8 +41,3 @@ class Sensor:
 
     def result(self):
         return self.map_data
-    
-    
-test = Sensor(MAP)
-test.deploy((10,10), 10)
-sensor_plot(test.result())
