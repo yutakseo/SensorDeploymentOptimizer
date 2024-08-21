@@ -6,7 +6,7 @@ from datetime import datetime
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
-from Sensor2 import *
+from Sensor import *
 sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
 
 
@@ -34,7 +34,7 @@ class sensor_GA:
         self.range_ben = [{"low": 0,"high":1.5} for i in range(self.num_of_genes)]
         
     def fitness_func(self, ga_instance, solution, solution_idx):
-
+        return None
 
     def on_generation(self, ga_instance):
         print("\nGeneration = {generation}".format(generation=ga_instance.generations_completed))
