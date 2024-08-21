@@ -2,7 +2,7 @@ import os, sys
 import numpy as np
 import time
 from itertools import combinations
-from SensorModule.Sensor import *
+from Sensor_GPU import *
 
 
 class sensor_greedy:

@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.ndimage import distance_transform_edt
-
+from numba import njit, prange
 
 class Sensor:
     def __init__(self, MAP):
@@ -28,16 +28,21 @@ class Sensor:
     def deploy(self, sensor_position: tuple, coverage: int):
         circle = self.create_circle(coverage)
         center_y, center_x = sensor_position
-
-        for i in range(-coverage, coverage + 1):
-            for j in range(-coverage, coverage + 1):
-                map_x = center_x + j
-                map_y = center_y + i
-                if 0 <= map_x < self.width and 0 <= map_y < self.height:
-                    # circle 배열에서 실제 원의 범위와 맞는지 확인
-                    if circle[i + coverage, j + coverage]:
-                        self.map_data[map_y, map_x] += 10  # 센서 영역을 맵에 추가
+        
+        self.map_data = deploy_circle_parallel(self.map_data, circle, center_x, center_y, coverage, self.width, self.height)
         return self.map_data
 
     def result(self):
         return self.map_data
+
+@njit(parallel=True)
+def deploy_circle_parallel(map_data, circle, center_x, center_y, coverage, width, height):
+    for i in prange(-coverage, coverage + 1):
+        for j in prange(-coverage, coverage + 1):
+            map_x = center_x + j
+            map_y = center_y + i
+            if 0 <= map_x < width and 0 <= map_y < height:
+                if circle[i + coverage, j + coverage]:
+                    map_data[map_y, map_x] += 10
+    return map_data
+

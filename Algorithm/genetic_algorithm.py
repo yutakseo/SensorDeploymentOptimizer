@@ -6,7 +6,7 @@ from datetime import datetime
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
-from Sensor import *
+from Sensor_GPU import *
 sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
 
 
@@ -38,7 +38,7 @@ class sensor_GA:
         #초기 염색체 생성 함수
         function_inputs = chromsome
         #기대값 설정
-        desired_output = 100
+        desired_output = 1000
         #유전자 해범위 설정
         self.range_ben = [{"low": 0,"high":1.5} for i in range(self.num_of_genes)]
         
@@ -88,7 +88,7 @@ class sensor_GA:
                         mutation_type="adaptive",
                         mutation_probability=[1, 0.7],
                         on_generation = self.on_generation,
-                        stop_criteria=["reach_80.0", "saturate_500"],
+                        stop_criteria=["saturate_500"],
                         parallel_processing=24)
         
         ga_instance.run()

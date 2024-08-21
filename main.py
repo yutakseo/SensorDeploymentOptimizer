@@ -4,10 +4,10 @@ import numpy as np
 
 from SensorPlot import *
 from ComputerVisionModule.cv_detector import *
-from SensorModule.Sensor import Sensor
+from SensorModule import Sensor
 
 #사용할 건설현장 맵 선택
-from __MAPS__.rectangle_140by140 import *
+from __MAPS__.test_map import *
 
 #사용할 알고리즘
 from Algorithm.genetic_algorithm import *
@@ -53,6 +53,6 @@ class Main:
 if __name__ == "__main__":
     result = []
     for i in range(1):
-        test = Main.run(MAP, 5, 1000)
+        test = Main.run(MAP, 20, 1000)
         result.append(test)
-        to_xlsx(result, f"rectangle{i}")
+        #to_xlsx(result, f"rectangle{i}")
