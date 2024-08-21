@@ -1,65 +1,64 @@
 import numpy as np
-from numba import njit, prange
+from scipy.ndimage import distance_transform_edt
 
 class Sensor:
-    def __init__(self, map):
-        self.map = np.array(map)
+    def __init__(self, MAP):
+        self.map_data = np.array(MAP)
+        self.width = self.map_data.shape[1]
+        self.height = self.map_data.shape[0]
+        self.circle = None
+        self.radius = None
 
-    @staticmethod
-    @njit(parallel=True)
-    def create_circle(radius):
-        temp_arr = np.zeros((2*radius+1, 2*radius+1), dtype=np.int32)
-        rows, cols = temp_arr.shape
-        for x in prange(rows):
-            for y in prange(cols):
-                distance = np.sqrt((x - radius)**2 + (y - radius)**2)
-                if distance <= radius:
-                    temp_arr[x, y] = 10
-        return temp_arr
-
-    @staticmethod
-    @njit(parallel=True)
-    def _deploy_kernel(map_data, start_x, start_y, circle, circle_slice_x, circle_slice_y):
-        map_slice_x = slice(start_x, start_x + circle.shape[0])
-        map_slice_y = slice(start_y, start_y + circle.shape[1])
-        for i in prange(circle.shape[0]):
-            for j in prange(circle.shape[1]):
-                if circle[i, j] > 0:
-                    map_data[start_y + i, start_x + j] += circle[i, j]
-        return map_data
-
-    @staticmethod
-    @njit(parallel=True)
-    def _retrieve_kernel(map_data, start_x, start_y, circle, circle_slice_x, circle_slice_y):
-        map_slice_x = slice(start_x, start_x + circle.shape[0])
-        map_slice_y = slice(start_y, start_y + circle.shape[1])
-        for i in prange(circle.shape[0]):
-            for j in prange(circle.shape[1]):
-                if circle[i, j] > 0:
-                    map_data[start_y + i, start_x + j] -= circle[i, j]
-                    if map_data[start_y + i, start_x + j] < 0:
-                        map_data[start_y + i, start_x + j] = 0
-        return map_data
-
-    def deploy(self, center, radius):
-        circle = self.create_circle(radius)
-        center_x, center_y = center
-
-        start_x = max(center_x - radius, 0)
-        start_y = max(center_y - radius, 0)
+    def create_circle(self, radius):
+        # 이미 원이 생성된 경우 그리고 반지름이 같다면 기존에 생성된 원 호출
+        if self.circle is not None and self.radius == radius:
+            return self.circle
         
-        self.map = self._deploy_kernel(self.map, start_x, start_y, circle, None, None)
-        return self.map
-
-    def retrieve(self, center, radius):
-        circle = self.create_circle(radius)
-        center_x, center_y = center
-
-        start_x = max(center_x - radius, 0)
-        start_y = max(center_y - radius, 0)
+        # 원의 직경에 해당하는 그리드 생성
+        L = 2 * radius + 1
+        grid = np.zeros((L, L))
+        center = (radius, radius)
+        grid[center] = 1
+        distance = distance_transform_edt(1 - grid)
+        circle_shape = distance <= radius
         
-        self.map = self._retrieve_kernel(self.map, start_x, start_y, circle, None, None)
-        return self.map
+        # 생성된 원을 속성으로 저장
+        self.circle = circle_shape.astype(np.int8)
+        self.radius = radius
+        return self.circle
+
+    def deploy(self, sensor_position: tuple, coverage: int):
+        circle = self.create_circle(coverage)
+        center_x, center_y = sensor_position
+
+        start_x = max(center_x - coverage, 0)
+        start_y = max(center_y - coverage, 0)
+        
+        for i in range(circle.shape[0]):
+            for j in range(circle.shape[1]):
+                map_x = start_x + i
+                map_y = start_y + j
+                if 0 <= map_x < self.height and 0 <= map_y < self.width:
+                    self.map_data[map_x, map_y] += circle[i, j] * 10  # 원하는 값을 더해줌
+        return self.map_data
+
+    def retrieve(self, sensor_position: tuple, coverage: int):
+        circle = self.create_circle(coverage)
+        center_x, center_y = sensor_position
+
+        start_x = max(center_x - coverage, 0)
+        start_y = max(center_y - coverage, 0)
+        
+        for i in range(circle.shape[0]):
+            for j in range(circle.shape[1]):
+                map_x = start_x + i
+                map_y = start_y + j
+                if 0 <= map_x < self.height and 0 <= map_y < self.width:
+                    self.map_data[map_x, map_y] -= circle[i, j] * 10  # 원하는 값을 빼줌
+                    if self.map_data[map_x, map_y] < 0:
+                        self.map_data[map_x, map_y] = 0
+
+        return self.map_data
 
     def result(self):
-        return self.map
+        return self.map_data

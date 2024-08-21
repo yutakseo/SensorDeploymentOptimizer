@@ -11,7 +11,7 @@ from SensorModule.Sensor import Sensor
 from MapData.example import *
 
 #사용할 알고리즘
-from Algorithm.genetic_algorithm import *
+from Algorithm.genetic_algorithm2 import *
 
 
 class Main:

@@ -6,7 +6,7 @@ from datetime import datetime
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
-from Sensor import *
+from Sensor2 import *
 sys.path.append(os.path.join(__file__,"Ref_EvaluationFunc"))
 
 
@@ -15,18 +15,9 @@ class sensor_GA:
         self.map_data = np.array(map)
         self.coverage = coverage
         self.generations = generation
-        chromsome = []
         self.cord_dic = {}
-                
         positions = np.argwhere(self.map_data >= 1)
-        
-        #기존에 사용하던 방식(초기 염색체 = 0)
-        #chromsome = np.zeros(shape=positions.shape[0], dtype=int)
-        #개선 방식(초기 염색체 = 랜덤)
         chromsome = np.random.choice([0,1], size=positions.shape[0], p=[0.75, 0.25])
-        print(chromsome)
-        
-        chromsome = chromsome.tolist()
         self.cord_dic = {tuple(pos): 1 for pos in positions}
         
 
@@ -43,31 +34,8 @@ class sensor_GA:
         self.range_ben = [{"low": 0,"high":1.5} for i in range(self.num_of_genes)]
         
     def fitness_func(self, ga_instance, solution, solution_idx):
-        chrom = solution
-        data = copy.deepcopy(self.map_data)
-        ref_data = copy.deepcopy(data)
-        n = 0
-        
-        #유전 정보에 따라 센서 배치
-        se = Sensor(data)
-        for i in range(len(ref_data)):
-            for j in range(len(ref_data[0])):
-                if ref_data[i][j] == 1:
-                    if chrom[n] == 1:
-                        data = se.deploy((j,i), self.coverage)
-                    n += 1
 
-        #배치된 센서의 커버리지 영역 평가
-        total_cells = 0
-        score = 0
-        for i in range(len(ref_data)):
-            for j in range(len(ref_data[0])):
-                if ref_data[i][j] >= 1:
-                    total_cells += 1
-                    score += -0.8*(data[i][j]-ref_data[i][j])**2+1
-        del data, ref_data
-        return round(score / total_cells * 100,5)
-    
+
     def on_generation(self, ga_instance):
         print("\nGeneration = {generation}".format(generation=ga_instance.generations_completed))
         print("Fitness    = {fitness}".format(fitness=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]))
