@@ -1,5 +1,8 @@
 import numpy as np
 from scipy.ndimage import distance_transform_edt
+from SensorPlot import *
+from rectangle_140by140 import *
+
 
 class Sensor:
     def __init__(self, MAP):
@@ -26,36 +29,22 @@ class Sensor:
 
     def deploy(self, sensor_position: tuple, coverage: int):
         circle = self.create_circle(coverage)
-        center_x, center_y = sensor_position
+        center_y, center_x = sensor_position
 
-        start_x = max(center_x - coverage, 0)
-        start_y = max(center_y - coverage, 0)
-        
-        for i in range(circle.shape[0]):
-            for j in range(circle.shape[1]):
-                map_x = start_x + i
-                map_y = start_y + j
-                if 0 <= map_x < self.height and 0 <= map_y < self.width:
-                    self.map_data[map_x, map_y] += circle[i, j] * 10
-        return self.map_data
-
-    def retrieve(self, sensor_position: tuple, coverage: int):
-        circle = self.create_circle(coverage)
-        center_x, center_y = sensor_position
-
-        start_x = max(center_x - coverage, 0)
-        start_y = max(center_y - coverage, 0)
-        
-        for i in range(circle.shape[0]):
-            for j in range(circle.shape[1]):
-                map_x = start_x + i
-                map_y = start_y + j
-                if 0 <= map_x < self.height and 0 <= map_y < self.width:
-                    self.map_data[map_x, map_y] -= circle[i, j] * 10
-                    if self.map_data[map_x, map_y] < 0:
-                        self.map_data[map_x, map_y] = 0
-
+        for i in range(-coverage, coverage + 1):
+            for j in range(-coverage, coverage + 1):
+                map_x = center_x + j
+                map_y = center_y + i
+                if 0 <= map_x < self.width and 0 <= map_y < self.height:
+                    # circle 배열에서 실제 원의 범위와 맞는지 확인
+                    if circle[i + coverage, j + coverage]:
+                        self.map_data[map_y, map_x] += 10  # 센서 영역을 맵에 추가
         return self.map_data
 
     def result(self):
         return self.map_data
+    
+    
+test = Sensor(MAP)
+test.deploy((10,10), 10)
+sensor_plot(test.result())

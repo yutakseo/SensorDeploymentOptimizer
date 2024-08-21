@@ -2,13 +2,12 @@ import os, sys, time
 from toXLSX import *
 import numpy as np
 
-from VisualizationTool.VisualizationModule import *
+from SensorPlot import *
 from ComputerVisionModule.cv_detector import *
 from SensorModule.Sensor import Sensor
 
 #사용할 건설현장 맵 선택
-#from MapData.truncated_140by140 import *
-from MapData.example import *
+from __MAPS__.truncated_140by140 import *
 
 #사용할 알고리즘
 from Algorithm.genetic_algorithm2 import *
@@ -47,8 +46,8 @@ class Main:
         print(cord)
 
         #결과출력
-        vis.show_jetmap("",MAP)
         
+        sensor_plot()
         return (runtime ,numb_of_sensors, cord)
     
 
