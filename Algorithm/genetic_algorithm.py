@@ -23,15 +23,15 @@ class sensor_GA:
         #기존에 사용하던 방식(초기 염색체 = 0)
         #chromsome = np.zeros(shape=positions.shape[0], dtype=int)
         #개선 방식(초기 염색체 = 랜덤)
-        chromsome = np.random.choice([0,1], size=positions.shape[0], p=[0.5, 0.5])
+        chromsome = np.random.choice([0,1], size=positions.shape[0], p=[0.75, 0.25])
         print(chromsome)
         
         chromsome = chromsome.tolist()
         self.cord_dic = {tuple(pos): 1 for pos in positions}
         
 
-        self.num_of_parents_mating = 12
-        self.solutions_per_pop = 60
+        self.num_of_parents_mating = 10
+        self.solutions_per_pop = 120
         self.num_of_genes = len(chromsome)
         self.last_fitness = 0
         
@@ -44,7 +44,6 @@ class sensor_GA:
         
     def fitness_func(self, ga_instance, solution, solution_idx):
         chrom = solution
-        
         data = copy.deepcopy(self.map_data)
         ref_data = copy.deepcopy(data)
         n = 0
@@ -87,7 +86,7 @@ class sensor_GA:
                         parent_selection_type="rank",
                         crossover_type="scattered",
                         mutation_type="adaptive",
-                        mutation_probability=[0.8, 0.5],
+                        mutation_probability=[0.7, 1],
                         on_generation = self.on_generation,
                         stop_criteria=["reach_80.0", "saturate_500"],
                         parallel_processing=24)
@@ -103,6 +102,7 @@ class sensor_GA:
         
         
         ga_instance.plot_fitness()
+        #ga_instance.plot_genes()
         sol_list = solution.tolist()
         
         

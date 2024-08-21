@@ -55,6 +55,6 @@ class Main:
 if __name__ == "__main__":
     result = []
     for i in range(1):
-        test = Main.run(MAP, 4, 1000)
+        test = Main.run(MAP, 5, 1000)
         result.append(test)
-    to_xlsx(result, "rectangle1")
+        to_xlsx(result, f"rectangle{i}")
