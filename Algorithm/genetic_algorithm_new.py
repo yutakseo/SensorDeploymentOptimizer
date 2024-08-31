@@ -38,12 +38,18 @@ class sensor_GA:
                 self.sensor_instance.deploy(sensor_position=self.feasible_positons[i], coverage=self.coverage)
         return self.sensor_instance.result()
         
+    def check_cover_restriction(self, simulation):
+        if np.arg(simulation == 1) == 0:
+            return 1
+        else:
+            return 0
+        
     def fitness_func(self, ga_instance, solution, solution_idx):
-        temp = self.deploy_simulation(solution=solution)
-        numb_of_sensors = np.sum(solution == 1)
-        numb_of_uncovered = np.sum(temp == 1)
-        restrict_condition1 = self.num_of_genes - numb_of_uncovered
-        return restrict_condition1
+        #적합도함수는 #센서개수 최소화(목적) #제약조건: 모든 현장 커버리지 커버
+        simulation = self.deploy_simulation(solution=solution)
+        numb_of_sensor = np.sum(solution == 1)
+        cond1 = self.check_cover_restriction
+        return numb_of_sensor*cond1
         
     def on_generation(self, ga_instance):
         print("\nGeneration = {generation}".format(generation=ga_instance.generations_completed))
@@ -67,7 +73,7 @@ class sensor_GA:
                         mutation_type="adaptive",
                         mutation_probability=[0.9, 1],
                         on_generation = self.on_generation,
-                        stop_criteria=["reach_48","saturate_500"],
+                        stop_criteria=["saturate_500"],
                         parallel_processing=24)
         
         ga_instance.run()
