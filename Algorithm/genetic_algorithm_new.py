@@ -18,8 +18,8 @@ class sensor_GA:
         
         
         self.__init__chromsome__ = np.random.choice([0,1], size=self.feasible_positons.shape[0], p=[0.97, 0.03])
-        self.num_of_parents_mating = 20
-        self.solutions_per_pop = 100
+        self.num_of_parents_mating = 30
+        self.solutions_per_pop = 120
         self.num_of_genes = len(self.feasible_positons)
         self.last_fitness = 0
         
@@ -39,7 +39,7 @@ class sensor_GA:
         return self.sensor_instance.result()
         
     def check_cover_restriction(self, simulation):
-        if np.arg(simulation == 1) == 0:
+        if np.sum(simulation == 1) == 0:
             return 1
         else:
             return 0
@@ -48,14 +48,15 @@ class sensor_GA:
         #적합도함수는 #센서개수 최소화(목적) #제약조건: 모든 현장 커버리지 커버
         simulation = self.deploy_simulation(solution=solution)
         numb_of_sensor = np.sum(solution == 1)
-        cond1 = self.check_cover_restriction
-        return numb_of_sensor*cond1
+        Minimize = self.num_of_genes - numb_of_sensor
+        cond1 = self.check_cover_restriction(simulation=simulation)
+
+        return Minimize*cond1
         
     def on_generation(self, ga_instance):
         print("\nGeneration = {generation}".format(generation=ga_instance.generations_completed))
         print("Fitness    = {fitness}".format(fitness=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]))
         print("Change     = {change}".format(change=ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1] - self.last_fitness))
-        print("\n\n")
         self.last_fitness = ga_instance.best_solution(pop_fitness=ga_instance.last_generation_fitness)[1]
         return self.last_fitness
         
@@ -73,7 +74,7 @@ class sensor_GA:
                         mutation_type="adaptive",
                         mutation_probability=[0.9, 1],
                         on_generation = self.on_generation,
-                        stop_criteria=["saturate_500"],
+                        stop_criteria=["saturate_2500"],
                         parallel_processing=24)
         
         ga_instance.run()
@@ -88,12 +89,12 @@ class sensor_GA:
         
         
         ga_instance.plot_fitness()
-        #ga_instance.plot_genes()
+        ga_instance.plot_genes()
         sol_list = solution.tolist()
         
 
     
 #test instance    
-test = sensor_GA(MAP2, 2, 1000)
+test = sensor_GA(MAP2, 5, 10000)
 print("최종해",test.num_of_genes)
 test.run()
