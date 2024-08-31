@@ -87,7 +87,7 @@ class sensor_GA:
         
 
     
-    
+#test instance    
 test = sensor_GA(MAP2, 2, 1000)
 print("최종해",test.num_of_genes)
 test.run()
