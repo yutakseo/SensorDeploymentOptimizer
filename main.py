@@ -10,7 +10,7 @@ from SensorModule import Sensor
 from __MAPS__.test_map import *
 
 #사용할 알고리즘
-from Algorithm.genetic_algorithm import *
+from Algorithm.genetic_algorithm_new import *
 
 
 class Main:
@@ -34,6 +34,7 @@ class Main:
         cord = sensor_GA(MAP, coverage, GEN).run()
         #cord = sensor_greedy(MAP, coverage).run()
 
+        """
         numb_of_sensors = len(cord)
         #알고리즘으로 추출된 센서 배치
         for i in range(numb_of_sensors):
@@ -43,12 +44,12 @@ class Main:
         print("배치된 센서 수 : ", numb_of_sensors)
         print(f"경과시간(초) : {runtime:.4f}sec")
         print(cord)
+        
 
         #결과출력
-        
         sensor_plot(MAP)
         return (runtime ,numb_of_sensors, cord)
-    
+        """
 
 if __name__ == "__main__":
     result = []

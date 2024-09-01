@@ -7,7 +7,7 @@ __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
-from test_map import MAP2
+#from test_map import MAP2
 
 class sensor_GA:
     def __init__(self, map, coverage, generation):
@@ -78,7 +78,8 @@ class sensor_GA:
                         mutation_type="adaptive",
                         mutation_probability=[0.9, 1],
                         on_generation = self.on_generation,
-                        stop_criteria=["saturate_2500"],
+                        stop_criteria=["saturate_100"],
+                        save_solutions=True,
                         parallel_processing=24)
         
         ga_instance.run()
@@ -99,8 +100,8 @@ class sensor_GA:
 
     
 #test instance    
-test = sensor_GA(MAP2, 2, 10000)
+"""test = sensor_GA(MAP2, 2, 10000)
 print("최종해",test.num_of_genes)
-test.run()
+test.run()"""
 #지금 현재 적합도함수에 센서개수가 0으로 수렴하는 현상을 발견
 #차후 수정이 필요
