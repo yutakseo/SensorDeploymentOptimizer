@@ -26,7 +26,7 @@ class sensor_GA:
         #초기 염색체 생성 함수
         function_inputs = self.__init__chromsome__
         #기대값 설정
-        desired_output = 48
+        desired_output = 100
         #유전자 해범위 설정
         self.range_ben = [{"low": 0,"high":1.1} for i in range(self.num_of_genes)]
         
@@ -48,10 +48,14 @@ class sensor_GA:
         #적합도함수는 #센서개수 최소화(목적) #제약조건: 모든 현장 커버리지 커버
         simulation = self.deploy_simulation(solution=solution)
         numb_of_sensor = np.sum(solution == 1)
+        
+        #Objective Function
         Minimize = self.num_of_genes - numb_of_sensor
+        
+        #Constraint
         cond1 = self.check_cover_restriction(simulation=simulation)
 
-        return Minimize*cond1
+        return round((Minimize*cond1)/self.num_of_genes*100,3)
         
     def on_generation(self, ga_instance):
         print("\nGeneration = {generation}".format(generation=ga_instance.generations_completed))
@@ -95,6 +99,8 @@ class sensor_GA:
 
     
 #test instance    
-test = sensor_GA(MAP2, 5, 10000)
+test = sensor_GA(MAP2, 2, 10000)
 print("최종해",test.num_of_genes)
 test.run()
+#지금 현재 적합도함수에 센서개수가 0으로 수렴하는 현상을 발견
+#차후 수정이 필요
