@@ -14,31 +14,25 @@ from Algorithm.genetic_algorithm_new import *
 
 
 class Main:
-    def run(MAP, COV, GEN):
-        #센서 커버리지 설정
-        coverage = COV
-        MAP = MAP
-        GEN = GEN
+    def __init__(self, MAP, COV, GEN):
+        self.coverage = COV
+        self.MAP = np.array(MAP)
+        self.GEN = GEN
         
+    def run(self):
         start = time.time()
-        #vis.show_jetmap("",MAP)
         
-        #최외곽 센서 배치
-        corner_position = ComputerVision(MAP).harris_corner(2, 3, 0.01)
-        sensor = Sensor(MAP)
-        for i in range(len(corner_position)):
-            sensor.deploy(corner_position[i], coverage)
-        MAP = sensor.result()
-
+        #최외곽 지점 추출
+        corner_position = ComputerVision(self.MAP).harris_corner(2, 3, 0.01)
+        
         #알고리즘 선택
-        cord = sensor_GA(MAP, coverage, GEN).run()
-        #cord = sensor_greedy(MAP, coverage).run()
-
-        """
-        numb_of_sensors = len(cord)
+        cord = sensor_GA(self.MAP, self.coverage, self.GEN).run()
+        
+        
+        sensor = Sensor(self.MAP)
         #알고리즘으로 추출된 센서 배치
         for i in range(numb_of_sensors):
-            sensor.deploy(cord[i], coverage)
+            sensor.deploy(cord[i], self.coverage)
         MAP = sensor.result()
         runtime = time.time() -start
         print("배치된 센서 수 : ", numb_of_sensors)
@@ -49,11 +43,14 @@ class Main:
         #결과출력
         sensor_plot(MAP)
         return (runtime ,numb_of_sensors, cord)
-        """
+        
 
 if __name__ == "__main__":
     result = []
     for i in range(1):
-        test = Main.run(MAP, 20, 100)
+        test = Main(MAP, 20, 1).run()
+        print(test)
         result.append(test)
-        #to_xlsx(result, f"rectangle{i}")
+        print(result)
+
+#print(ComputerVision(MAP).harris_corner(2, 3, 0.01))

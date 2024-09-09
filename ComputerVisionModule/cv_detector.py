@@ -20,6 +20,7 @@ class ComputerVision():
                 if binary_image[i][j] == 1:
                     grid.append(((j),(i)))
         return grid
+        
     
     def edge_detector(self):
 #행방향 변환작업
@@ -73,3 +74,4 @@ class ComputerVision():
                 converted_data.append(raw_data)
         
         return converted_data
+

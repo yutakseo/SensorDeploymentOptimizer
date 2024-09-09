@@ -7,7 +7,7 @@ __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
-#from test_map import MAP2
+
 
 class sensor_GA:
     def __init__(self, map, coverage, generation):
@@ -17,7 +17,7 @@ class sensor_GA:
         self.feasible_positons = np.argwhere(self.map_data >= 1)
         
         
-        self.__init__chromsome__ = np.random.choice([0,1], size=self.feasible_positons.shape[0], p=[0.97, 0.03])
+        self.__init__chromsome__ = np.random.choice([0,1], size=self.feasible_positons.shape[0], p=[0.01, 0.99])
         self.num_of_parents_mating = 30
         self.solutions_per_pop = 120
         self.num_of_genes = len(self.feasible_positons)
@@ -26,7 +26,7 @@ class sensor_GA:
         #초기 염색체 생성 함수
         function_inputs = self.__init__chromsome__
         #기대값 설정
-        desired_output = 100
+        desired_output = 95
         #유전자 해범위 설정
         self.range_ben = [{"low": 0,"high":1.1} for i in range(self.num_of_genes)]
         
@@ -89,19 +89,15 @@ class sensor_GA:
         print("Parameters of the best solution : {solution}".format(solution=solution))
         print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
         print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
-        
-        #ga_instance.save(str(datetime.now().strftime('%y%m%d')))
-        
+
         
         ga_instance.plot_fitness()
-        ga_instance.plot_genes()
-        sol_list = solution.tolist()
-        
+        return solution
 
-    
+"""from test_map import *
 #test instance    
-"""test = sensor_GA(MAP2, 2, 10000)
+test = sensor_GA(MAP2, 4, 10)
 print("최종해",test.num_of_genes)
-test.run()"""
+print(test.run())
 #지금 현재 적합도함수에 센서개수가 0으로 수렴하는 현상을 발견
-#차후 수정이 필요
+#차후 수정이 필요"""
