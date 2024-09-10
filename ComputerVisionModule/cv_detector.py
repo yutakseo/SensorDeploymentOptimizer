@@ -8,19 +8,13 @@ class ComputerVision():
    
     def harris_corner(self, block_size, ksize, k):
         self.result = cv2.cornerHarris(self.map_data, block_size, ksize, k)
-
-        
         max_val = np.max(self.result)
         binary_image = np.zeros_like(self.result, dtype=np.uint8)
         binary_image[self.result == max_val] = 1 
+        print(binary_image)
+        dst = np.where(binary_image == 1)
         
-        grid = []
-        for i in range(len(binary_image)):
-            for j in range(len(binary_image[0])):
-                if binary_image[i][j] == 1:
-                    grid.append(((j),(i)))
-        return grid
-        
+        return list(zip(dst[0],dst[1]))
     
     def edge_detector(self):
 #행방향 변환작업

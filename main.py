@@ -21,15 +21,20 @@ class Main:
         
     def run(self):
         start = time.time()
+        sensor = Sensor(self.MAP)
         
-        #최외곽 지점 추출
+        #최외곽 지점 추출 및 배치
         corner_position = ComputerVision(self.MAP).harris_corner(2, 3, 0.01)
+        for i in range(corner_position):
+            sensor.deploy(i, self.coverage)
+        self.MAP = sensor.result()
+        
         
         #알고리즘 선택
         cord = sensor_GA(self.MAP, self.coverage, self.GEN).run()
         
         
-        sensor = Sensor(self.MAP)
+        """
         #알고리즘으로 추출된 센서 배치
         for i in range(numb_of_sensors):
             sensor.deploy(cord[i], self.coverage)
@@ -38,7 +43,7 @@ class Main:
         print("배치된 센서 수 : ", numb_of_sensors)
         print(f"경과시간(초) : {runtime:.4f}sec")
         print(cord)
-        
+        """
 
         #결과출력
         sensor_plot(MAP)
