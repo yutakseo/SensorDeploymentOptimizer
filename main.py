@@ -38,7 +38,7 @@ class Main:
         dst = corner_position + cord
         dst = [(y, x) for x, y in dst]
         print(dst)
-        print(time.time() - start
+        print(f"경과시간(초) : {runtime:.4f}sec")
         #센서 배치 형태 시각화
         self.MAP = sensor.result()
         self.vis.showJetMap("RESULT", self.MAP)
