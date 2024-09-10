@@ -6,7 +6,7 @@ from datetime import datetime
 __file__ = os.getcwd()
 __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
-from Sensor import *
+from Sensor_origin import *
 
 
 class sensor_GA:
@@ -32,7 +32,6 @@ class sensor_GA:
         
     def deploy_simulation(self, solution):
         self.sensor_instance = Sensor(self.map_data)
-        self.sensor_instance.create_circle(self.coverage)
         for i in range(self.num_of_genes):
             if solution[i] == 1:
                 self.sensor_instance.deploy(sensor_position=self.feasible_positions[i], coverage=self.coverage)
@@ -76,10 +75,9 @@ class sensor_GA:
                         parent_selection_type="sss",
                         crossover_type="two_points",
                         mutation_type="adaptive",
-                        mutation_probability=[0.9, 1],
+                        mutation_probability=[1.0, 0.5],
                         on_generation = self.on_generation,
                         stop_criteria=["saturate_100"],
-                        save_solutions=True,
                         parallel_processing=24)
         
         ga_instance.run()
