@@ -1,16 +1,15 @@
 import os, sys, time
 from toXLSX import *
 import numpy as np
-
-from SensorPlot import *
+from Visual import *
 from ComputerVisionModule.cv_detector import *
 from SensorModule import Sensor
 
 #사용할 건설현장 맵 선택
-from __MAPS__.test_map import *
+from __MAPS__.rectangle_140by140 import *
 
 #사용할 알고리즘
-from Algorithm.genetic_algorithm_new import *
+from Algorithm.GeneticAlgorithm import *
 
 
 class Main:
@@ -18,44 +17,39 @@ class Main:
         self.coverage = COV
         self.MAP = np.array(MAP)
         self.GEN = GEN
-        
+        self.vis = VisualTool()
+            
     def run(self):
         start = time.time()
         sensor = Sensor(self.MAP)
-        
         #최외곽 지점 추출 및 배치
         corner_position = ComputerVision(self.MAP).harris_corner(2, 3, 0.01)
-        for i in range(corner_position):
+        for i in corner_position:
             sensor.deploy(i, self.coverage)
         self.MAP = sensor.result()
         
-        
         #알고리즘 선택
         cord = sensor_GA(self.MAP, self.coverage, self.GEN).run()
+        for i in cord:
+            sensor.deploy(i, self.coverage)
         
         
-        """
-        #알고리즘으로 추출된 센서 배치
-        for i in range(numb_of_sensors):
-            sensor.deploy(cord[i], self.coverage)
-        MAP = sensor.result()
-        runtime = time.time() -start
-        print("배치된 센서 수 : ", numb_of_sensors)
-        print(f"경과시간(초) : {runtime:.4f}sec")
-        print(cord)
-        """
-
-        #결과출력
-        sensor_plot(MAP)
-        return (runtime ,numb_of_sensors, cord)
+        #결과 프롬프트 출력
+        dst = corner_position + cord
+        dst = [(y, x) for x, y in dst]
+        print(dst)
+        print(time.time() - start
+        #센서 배치 형태 시각화
+        self.MAP = sensor.result()
+        self.vis.showJetMap("RESULT", self.MAP)
+        
+        return dst
+        
         
 
 if __name__ == "__main__":
-    result = []
     for i in range(1):
-        test = Main(MAP, 20, 1).run()
-        print(test)
-        result.append(test)
-        print(result)
+        algorithm = Main(MAP, 20, 10).run()
+        
 
-#print(ComputerVision(MAP).harris_corner(2, 3, 0.01))
+

@@ -11,7 +11,6 @@ class ComputerVision():
         max_val = np.max(self.result)
         binary_image = np.zeros_like(self.result, dtype=np.uint8)
         binary_image[self.result == max_val] = 1 
-        print(binary_image)
         dst = np.where(binary_image == 1)
         
         return list(zip(dst[0],dst[1]))

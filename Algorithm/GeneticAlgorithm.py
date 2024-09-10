@@ -14,13 +14,13 @@ class sensor_GA:
         self.map_data = np.array(map)
         self.coverage = coverage
         self.generations = generation
-        self.feasible_positons = np.argwhere(self.map_data >= 1)
+        self.feasible_positions = np.argwhere(self.map_data == 1)
         
         
-        self.__init__chromsome__ = np.random.choice([0,1], size=self.feasible_positons.shape[0], p=[0.01, 0.99])
+        self.__init__chromsome__ = np.random.choice([0,1], size=self.feasible_positions.shape[0], p=[0.01, 0.99])
         self.num_of_parents_mating = 30
         self.solutions_per_pop = 120
-        self.num_of_genes = len(self.feasible_positons)
+        self.num_of_genes = len(self.feasible_positions)
         self.last_fitness = 0
         
         #초기 염색체 생성 함수
@@ -35,7 +35,7 @@ class sensor_GA:
         self.sensor_instance.create_circle(self.coverage)
         for i in range(self.num_of_genes):
             if solution[i] == 1:
-                self.sensor_instance.deploy(sensor_position=self.feasible_positons[i], coverage=self.coverage)
+                self.sensor_instance.deploy(sensor_position=self.feasible_positions[i], coverage=self.coverage)
         return self.sensor_instance.result()
         
     def check_cover_restriction(self, simulation):
@@ -84,20 +84,15 @@ class sensor_GA:
         
         ga_instance.run()
         
-        
         solution, solution_fitness, solution_idx = ga_instance.best_solution(ga_instance.last_generation_fitness)
         print("Parameters of the best solution : {solution}".format(solution=solution))
         print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
         print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
-        
-        ga_instance.plot_fitness()
-        return solution
 
-"""from test_map import *
-#test instance    
-test = sensor_GA(MAP2, 4, 10)
-print("최종해",test.num_of_genes)
-print(test.run())
-#지금 현재 적합도함수에 센서개수가 0으로 수렴하는 현상을 발견
-#차후 수정이 필요"""
+        indices = np.where(solution == 1)[0]
+        result_list = [self.feasible_positions[i] for i in indices]
+        result_list = [tuple(arr.tolist()) for arr in result_list]
+        ga_instance.plot_fitness()
+        
+        return result_list
