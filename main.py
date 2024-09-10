@@ -38,7 +38,8 @@ class Main:
         dst = corner_position + cord
         dst = [(y, x) for x, y in dst]
         print(dst)
-        print(f"경과시간(초) : {runtime:.4f}sec")
+        print(f"경과시간(초) : {time.time()-start:.4f}")
+        print(f"총 센서 수 : {len(dst)}")
         #센서 배치 형태 시각화
         self.MAP = sensor.result()
         self.vis.showJetMap("RESULT", self.MAP)
@@ -49,7 +50,7 @@ class Main:
 
 if __name__ == "__main__":
     for i in range(1):
-        algorithm = Main(MAP, 10, 100).run()
+        algorithm = Main(MAP, 30, 100).run()
         
 
 
