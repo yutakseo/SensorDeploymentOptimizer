@@ -1,6 +1,6 @@
 import os, sys, time, importlib
 import numpy as np
-import psutil  # CPU 사용량을 추적하기 위해 사용
+import psutil
 import csv
 from Visual import *
 from ComputerVisionModule.cv_detector import *
@@ -75,5 +75,5 @@ class Main:
 
 
 if __name__ == "__main__":
-    map_name = "rectangle_140by140"
-    algorithm = Main(map_name, 3, 20).run()
+    map_name = "test_map"
+    algorithm = Main(map_name, 4, 500).run()

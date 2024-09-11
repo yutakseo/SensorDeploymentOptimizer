@@ -1,0 +1,2 @@
+Timestamp,CPU Usage (%),Runtime (s),Map Name,Total Sensors,Sensor Positions
+2024-09-12 08:56:55,2.0,165.02267146110535,test_map,5,"[(2, 4), (12, 4), (2, 12), (12, 12), (6, 5)]"
