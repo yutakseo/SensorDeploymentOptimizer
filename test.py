@@ -8,6 +8,31 @@ __root__ = os.path.dirname(__file__)
 sys.path.append(os.path.join(__file__,"SensorModule"))
 from Sensor import *
 
+MAP = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
+sol_zero = [0] * 100
+sol_tens = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+sol_ones =[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+import random
+
+# 0과 1로 이루어진 100개의 원소를 가지는 리스트 생성
+sol_rand = [random.choice([0, 1]) for _ in range(100)]
+
+
 
 class sensor_GA:
     def __init__(self, map, coverage, generation):
@@ -43,11 +68,11 @@ class sensor_GA:
         else:
             return 0
         
-    def fitness_func(self, ga_instance, solution, solution_idx):
+    def fitness_func(self, solution):
         #적합도함수는 #센서개수 최소화(목적) #제약조건: 모든 현장 커버리지 커버
         simulation = self.deploy_simulation(solution=solution)
         numb_of_sensor = np.sum(solution == 1)
-        
+        print("유전자 센서", numb_of_sensor)
         #Objective Function
         Minimize = self.num_of_genes - numb_of_sensor
         
@@ -95,3 +120,16 @@ class sensor_GA:
         print(solution)
         
         return result_list
+def count_ones(lst):
+    return np.sum(lst == 1)
+
+
+
+ins = sensor_GA(np.array(MAP), 2, 10)
+solution = np.array(sol_rand)
+print(ins.deploy_simulation(solution=solution))
+print(solution)
+print("총센서개수", count_ones(solution),"개")
+print("적합도 점수",ins.fitness_func(solution=solution))
+
+print("유전자 개수",ins.num_of_genes)

@@ -50,7 +50,7 @@ class Main:
 
 if __name__ == "__main__":
     for i in range(1):
-        algorithm = Main(MAP, 20, 50).run()
+        algorithm = Main(MAP, 20, 5).run()
         
 
 
