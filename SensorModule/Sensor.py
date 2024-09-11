@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.ndimage import distance_transform_edt
 from numba import njit, prange
+import gc
 
 class Sensor:
     def __init__(self, MAP):
@@ -30,6 +31,7 @@ class Sensor:
         center_y, center_x = sensor_position
         
         self.map_data = deploy_circle_parallel(self.map_data, circle, center_x, center_y, coverage, self.width, self.height)
+        
         return self.map_data
 
     def result(self):
