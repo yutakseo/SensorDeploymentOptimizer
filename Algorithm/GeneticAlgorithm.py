@@ -17,7 +17,7 @@ class sensor_GA:
         self.feasible_positions = np.argwhere(self.map_data == 1)
         
         
-        self.__init__chromsome__ = np.random.choice([0,1], size=self.feasible_positions.shape[0], p=[0.01, 0.99])
+        self.__init__chromsome__ = np.random.choice([0,1], size=self.feasible_positions.shape[0], p=[0.99, 0.01])
         self.num_of_parents_mating = 30
         self.solutions_per_pop = 120
         self.num_of_genes = len(self.feasible_positions)
@@ -92,5 +92,6 @@ class sensor_GA:
         result_list = [self.feasible_positions[i] for i in indices]
         result_list = [tuple(arr.tolist()) for arr in result_list]
         ga_instance.plot_fitness()
+        print(solution)
         
         return result_list
