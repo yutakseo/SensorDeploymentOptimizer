@@ -39,7 +39,6 @@ class Main:
             writer.writerow(['Timestamp', 'CPU Usage (%)', 'Runtime (s)', 'Map Name', 'Total Sensors', 'Sensor Positions'])
             writer.writerow([current_time, cpu_info, runtime, self.map_name, num_sensor, sensor_positions])
 
-
     def run(self):
         start = time.time()
         sensor = Sensor(self.MAP)
@@ -76,5 +75,5 @@ class Main:
 
 
 if __name__ == "__main__":
-    map_name = "test_map"
+    map_name = "rectangle_140by140"
     algorithm = Main(map_name, 3, 20).run()
