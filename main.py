@@ -88,5 +88,6 @@ class Main:
 
 
 if __name__ == "__main__":
-    map_name = "test_map"
-    algorithm = Main(map_name, 4, 10).run()
+    for i in range(10):
+        map_name = "rectangle_140by140"
+        algorithm = Main(map_name, 20, 1000).run()
