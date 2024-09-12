@@ -1,7 +1,10 @@
-import os, sys, time, importlib
+import os
+import sys
+import time
+import importlib
 import numpy as np
-import psutil
-import csv
+import json  # JSON 라이브러리 추가
+from cpuinfo import get_cpu_info
 from Visual import *
 from ComputerVisionModule.cv_detector import *
 from SensorModule import Sensor
@@ -13,12 +16,12 @@ from Algorithm.GeneticAlgorithm import *
 class Main:
     def __init__(self, map_name, COV, GEN):
         self.coverage = COV
-        
+
         # 동적으로 MAP 모듈 임포트
         map_module_path = f"__MAPS__.{map_name}"
         map_module = importlib.import_module(map_module_path)
         self.MAP = np.array(getattr(map_module, "MAP"))
-        
+
         self.GEN = GEN
         self.vis = VisualTool()
         self.map_name = map_name
@@ -27,17 +30,27 @@ class Main:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        output_file = os.path.join(output_dir, f"result_{time.strftime('%Y%m%d_%H%M%S')}.csv")
+        output_file = os.path.join(output_dir, f"result_{time.strftime('%Y%m%d_%H%M%S')}.json")
 
-        # 현재 시간과 시스템 CPU 정보
         current_time = time.strftime("%Y-%m-%d %H:%M:%S")
-        cpu_info = psutil.cpu_percent(interval=1)  # CPU 사용량 (%)
+        cpu_info = get_cpu_info()['brand_raw']
 
-        # CSV 파일로 메타데이터 저장
-        with open(output_file, mode='w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(['Timestamp', 'CPU Usage (%)', 'Runtime (s)', 'Map Name', 'Total Sensors', 'Sensor Positions'])
-            writer.writerow([current_time, cpu_info, runtime, self.map_name, num_sensor, sensor_positions])
+        # numpy 타입을 파이썬 기본 타입으로 변환
+        sensor_positions = [(int(pos[0]), int(pos[1])) for pos in sensor_positions]
+
+        # 메타데이터를 JSON 형식으로 저장
+        metadata = {
+            "Timestamp": current_time,
+            "CPU Name": cpu_info,
+            "Runtime (s)": float(runtime),  # float으로 변환
+            "Map Name": self.map_name,
+            "Total Sensors": int(num_sensor),  # int로 변환
+            "Sensor Positions": sensor_positions
+        }
+
+        # JSON 파일로 메타데이터 저장 (줄바꿈 없이)
+        with open(output_file, mode='w') as file:
+            json.dump(metadata, file, separators=(',', ':'))  # separators 옵션으로 줄바꿈 없이 저장
 
     def run(self):
         start = time.time()
@@ -48,7 +61,7 @@ class Main:
         for i in corner_position:
             sensor.deploy(i, self.coverage)
         self.MAP = sensor.result()
-        
+
         # 알고리즘 선택 및 실행
         cord = sensor_GA(self.MAP, self.coverage, self.GEN).run()
         for i in cord:
@@ -59,12 +72,12 @@ class Main:
         dst = [(y, x) for x, y in dst]
         runtime = time.time() - start
         num_sensor = len(dst)
-        
+
         # 결과 프롬프트 출력
         print(dst)
         print(f"경과시간(초) : {runtime:.4f}")
         print(f"총 센서 수 : {num_sensor}")
-        
+
         # 센서 배치 형태 시각화
         self.MAP = sensor.result()
         self.vis.showJetMap("RESULT", self.MAP)
@@ -76,4 +89,4 @@ class Main:
 
 if __name__ == "__main__":
     map_name = "test_map"
-    algorithm = Main(map_name, 4, 500).run()
+    algorithm = Main(map_name, 4, 10).run()
