@@ -3,7 +3,7 @@ import sys
 import time
 import importlib
 import numpy as np
-import json  # JSON 라이브러리 추가
+import json
 from cpuinfo import get_cpu_info
 from Visual import *
 from ComputerVisionModule.cv_detector import *
