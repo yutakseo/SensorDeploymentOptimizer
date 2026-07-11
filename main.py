@@ -24,9 +24,9 @@ SENSOR_RANGES = [
 ]
 ALGORITHMS = (
     "ga",
-    #"greedy", 
-    #"drl", 
-    #"pso"
+    "greedy", 
+    "drl", 
+    "pso"
     )
 
 ITERATIONS = 100
