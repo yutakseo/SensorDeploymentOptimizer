@@ -101,6 +101,7 @@ class Experiment:
             ksize=cc.ksize,
             k=cc.k,
             dilate_size=cc.dilate_size,
+            response_threshold_ratio=cc.response_threshold_ratio,
             min_dist=cc.min_dist,
         )
 

@@ -53,6 +53,7 @@ HARRIS_PARAMS = {
     "ksize": 3,
     "k": 0.05,
     "dilate_size": 5,
+    "response_threshold_ratio": 0.10,
     "min_dist": 9,
 }
 

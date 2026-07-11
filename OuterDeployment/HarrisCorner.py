@@ -53,9 +53,20 @@ class HarrisCorner:
         h, w = mask.shape
         return [(x, y) for (x, y) in points if 0 <= x < w and 0 <= y < h and mask[y, x]]
     
-    def LMX(self, harris_map, installable_map, nms_ratio=0.1, dilate_size=5, min_dist=5):
+    def LMX(
+        self,
+        harris_map,
+        installable_map,
+        response_threshold_ratio=0.1,
+        dilate_size=5,
+        min_dist=5,
+        nms_ratio=None,
+    ):
+        if nms_ratio is not None:
+            response_threshold_ratio = nms_ratio
+
         mx = float(harris_map.max() if harris_map.size else 0.0)
-        thr = float(nms_ratio) * mx
+        thr = float(response_threshold_ratio) * mx
         self.nms_map = self.non_max_suppression(resp=harris_map, thr=thr, dilate_size=int(dilate_size))
 
         # 4) corners -> close filter -> installable filter
@@ -74,9 +85,13 @@ class HarrisCorner:
         k: float = 0.05,
         threshold: float = 0.10,
         dilate_size: int = 5,
-        nms_ratio: float = 0.10,
+        response_threshold_ratio: float = 0.10,
+        nms_ratio: float | None = None,
         min_dist: int = 5,
     ) -> list[tuple[int, int]]:
+        if nms_ratio is not None:
+            response_threshold_ratio = nms_ratio
+
         # 1) blur
         self.blur_map = self.gaussianBlur(grid)
 
@@ -91,7 +106,7 @@ class HarrisCorner:
 
         # 3) NMS
         mx = float(self.harris_map.max() if self.harris_map.size else 0.0)
-        thr = float(nms_ratio) * mx
+        thr = float(response_threshold_ratio) * mx
         self.nms_map = self.non_max_suppression(self.harris_map, thr=thr, dilate_size=int(dilate_size))
 
         # 4) corners -> close filter -> installable filter

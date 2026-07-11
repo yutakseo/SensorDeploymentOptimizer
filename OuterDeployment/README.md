@@ -122,6 +122,8 @@ The _HarrisCorner_ class provides 6 main methods. described below:
 
      - `dilate_size`: (Int) Size of the dilation window for non-maximum suppression. Default is `5`.
 
+     - `response_threshold_ratio`: (Float) Relative response threshold used before local maximum extraction. For example, `0.10` keeps only responses greater than 10% of the maximum Harris response. Default is `0.10`.
+
    - **Returns:**  
      - A list of `(x, y)` tuples representing the final detected corner coordinates.
 

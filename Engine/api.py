@@ -13,6 +13,7 @@ class CornerConfig:
     ksize: int = 3
     k: float = 0.05
     dilate_size: int = 5
+    response_threshold_ratio: float = 0.10
     min_dist: int = 9
 
 
@@ -195,6 +196,19 @@ def _with_overrides(cfg: Any, overrides: Optional[Dict[str, Any]]) -> Any:
     return replace(cfg, **overrides)
 
 
+def _normalize_corner(overrides: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    if not overrides or "nms_ratio" not in overrides:
+        return overrides
+
+    normalized = dict(overrides)
+    if "response_threshold_ratio" in normalized:
+        raise ValueError(
+            "Use only one of 'response_threshold_ratio' or legacy 'nms_ratio'."
+        )
+    normalized["response_threshold_ratio"] = normalized.pop("nms_ratio")
+    return normalized
+
+
 def make_optimizer_configs(
     algorithm: str = "ga",
     *,
@@ -280,7 +294,7 @@ def run_experiment(
         optimizer=optimizer,
         run=run,
     )
-    corner_cfg = _with_overrides(CornerConfig(), corner)
+    corner_cfg = _with_overrides(CornerConfig(), _normalize_corner(corner))
     out_dir = results_dir or f"__RESULTS__/{algorithm}/{sensor_range[0]}-{sensor_range[1]}"
 
     results: List[Tuple[List[Tuple[int, int]], str]] = []
